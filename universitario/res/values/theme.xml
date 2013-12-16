@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ApplicationTheme" parent="Theme.Actionbar">
+        <item name="android:homeAsUpIndicator">@drawable/nav_indicator</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#666666</item>
+        <item name="android:windowBackground">@color/window_background</item>
+        <item name="android:actionBarStyle">@style/ActionBar.Solid.Actionbar.Application</item>
+    </style>
+
+    <style name="ActionBar.Solid.Actionbar.Application">
+        <item name="android:icon">@drawable/ic_logo_gray_hat</item>
+        <item name="android:titleTextStyle">@style/ApplicationTitleTextStyle</item>
+        <item name="android:subtitleTextStyle">@style/ApplicationSubtitleTextStyle</item>
+        <item name="android:actionBarTabTextStyle">@style/ApplicationActionBarTabTextStyle</item>
+    </style>
+
+    <!-- TODO: Text Color isn't working -->
+    <style name="ApplicationTitleTextStyle" parent="android:TextAppearance.Holo.Widget.ActionBar.Title.Inverse">
+        <item name="android:textColor">#F2E8E1</item>
+    </style>
+
+    <style name="ApplicationSubtitleTextStyle" parent="android:TextAppearance.Holo.Widget.ActionBar.Subtitle.Inverse">
+        <item name="android:textColor">#E4CDBE</item>
+    </style>
+
+    <style name="ApplicationActionBarTabTextStyle" parent="android:Widget.Holo.Light.ActionBar.TabText.Inverse">
+        <item name="android:textColor">#E4CDBE</item>
+    </style>
+
+</resources>

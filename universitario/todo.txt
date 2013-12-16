@@ -1,0 +1,3 @@
+TODO
+Icrease icon size inside application (on ActionBar)
+Put a square behind icon outside application

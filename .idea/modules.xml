@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Universitario.iml" filepath="$PROJECT_DIR$/Universitario.iml" />
+      <module fileurl="file://$PROJECT_DIR$/action-bar-sherlock/ActionBarSherlock.iml" filepath="$PROJECT_DIR$/action-bar-sherlock/ActionBarSherlock.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sliding-menu/SlidingMenu.iml" filepath="$PROJECT_DIR$/sliding-menu/SlidingMenu.iml" />
+      <module fileurl="file://$PROJECT_DIR$/universitario/Universitario.iml" filepath="$PROJECT_DIR$/universitario/Universitario.iml" />
     </modules>
   </component>
 </project>
