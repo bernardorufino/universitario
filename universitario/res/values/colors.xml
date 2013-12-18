@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="window_background">#cccccc</color>
+    <!-- Thresholds are set on Definitions -->
+    <color name="absence_ok">#81C479</color>
+    <color name="absence_warning">#E2CC88</color>
+    <color name="absence_overflow">#DBB1A7</color>
+    <color name="absence_remaining">#CCCCCC</color>
+
+    <color name="window_background">#CCCCCC</color>
     <color name="comp_att_card_btn">#666666</color>
 
 </resources>

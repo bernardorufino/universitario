@@ -13,5 +13,13 @@
         </attr>
         
     </declare-styleable>
+
+    <declare-styleable name="DiscreteProgressBarView">
+
+        <attr name="space" format="dimension" />
+        <attr name="current" format="float" />
+        <attr name="total" format="integer" />
+
+    </declare-styleable>
     
 </resources>

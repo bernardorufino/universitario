@@ -2,6 +2,7 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/br.com.bernardorufino.android.universitario"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -95,16 +96,31 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="22dp"
-        android:paddingRight="10dp"
+        android:paddingTop="2dp"
+        android:paddingRight="4dp"
         android:paddingBottom="6dp"
-        android:paddingLeft="10dp"
+        android:paddingLeft="4dp"
         android:background="@drawable/card_down">
 
+        <br.com.bernardorufino.android.universitario.view.components.DiscreteProgressBarView
+            android:id="@+id/comp_att_card_absences_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/comp_att_card_absences_badge"
+            custom:space="4dp"
+            custom:total="10"
+            custom:current="5.5" />
+
         <TextView
-            android:id="@+id/comp_att_card_absences_badge"
+            android:id="@id/comp_att_card_absences_badge"
             android:textSize="12sp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:layout_marginTop="-4dp"
             android:text="9/10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

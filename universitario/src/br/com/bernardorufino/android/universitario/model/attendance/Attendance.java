@@ -8,9 +8,10 @@ import static com.google.common.base.Preconditions.*;
 public class Attendance {
 
     private Course mCourse;
-    private int mAbsences;
+    private double mAbsences;
 
-    public Attendance(Course course, int absences) {
+    public Attendance(Course course, double absences) {
+        checkArgument(absences >= 0, "absences must be greater than or equal to zero");
         mCourse = checkNotNull(course);
         mAbsences = absences;
     }
@@ -19,7 +20,7 @@ public class Attendance {
         return mCourse;
     }
 
-    public int getAbsences() {
+    public double getAbsences() {
         return mAbsences;
     }
 
@@ -35,7 +36,7 @@ public class Attendance {
 
         Attendance that = (Attendance) o;
 
-        if (mAbsences != that.mAbsences) return false;
+        if (Double.compare(that.mAbsences, mAbsences) != 0) return false;
         if (mCourse != null ? !mCourse.equals(that.mCourse) : that.mCourse != null) return false;
 
         return true;
@@ -43,8 +44,11 @@ public class Attendance {
 
     @Override
     public int hashCode() {
-        int result = mCourse != null ? mCourse.hashCode() : 0;
-        result = 31 * result + mAbsences;
+        int result;
+        long temp;
+        result = mCourse != null ? mCourse.hashCode() : 0;
+        temp = Double.doubleToLongBits(mAbsences);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 }

@@ -32,7 +32,12 @@ public class AttendanceManager {
                 /* TODO: Implement */
                 return Lists.newArrayList(
                         new Attendance(new Course("CES-11", "Armando", 6*16), 8),
-                        new Attendance(new Course("CES-22", "Paulo Andre", 5*16), 10)
+                        new Attendance(new Course("CES-22", "Paulo Andre", 5*16), 10),
+                        new Attendance(new Course("EEA-45", "Douglas", 3*16), 8.5),
+                        new Attendance(new Course("ELE-55", "Duarte", 8*16), 3.5),
+                        new Attendance(new Course("ELE-31", "Manish", 6*16), 4.5),
+                        new Attendance(new Course("CES-30", "Parente", 6*16), 11),
+                        new Attendance(new Course("CES-28", "Clovis", 5*16), 9)
                 );
             }
         };
