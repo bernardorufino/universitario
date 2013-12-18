@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Don't want to use merge, because if so, I'd have to declare root attributes programmatically -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/nav_menu_item_selector">
+
+    <include layout="@layout/component_divider" android:id="@+id/comp_menu_item_above_divider" />
+
+    <!-- Not using compound drawables because image is loaded dynamically -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="UseCompoundDrawables">
+
+        <!-- Intended for flat (temporary white) foreground icons -->
+        <ImageView
+            android:id="@+id/comp_menu_item_icon"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:padding="5dp"
+            android:alpha="0.6"
+            android:contentDescription="@string/empty_string" />
+
+        <TextView
+            android:id="@+id/comp_menu_item_text"
+            android:textColor="#888"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/empty_string" />
+
+    </LinearLayout>
+
+    <include layout="@layout/component_divider" android:id="@+id/comp_menu_item_below_divider" />
+
+</LinearLayout>

@@ -2,14 +2,7 @@
 <resources>
 
     <style name="NavMenuStyle">
-        <item name="android:background">#ffffff</item>
-        <item name="android:paddingLeft">@dimen/list_padding</item>
-        <item name="android:paddingRight">@dimen/list_padding</item>
-    </style>
-
-    <style name="NavMenuFrameStyle">
-        <item name="android:background">#ffffff</item>
-        <item name="android:windowBackground">@color/nav_menu_background</item>
+        <item name="android:background">#2A2A2A</item>
     </style>
 
 </resources>

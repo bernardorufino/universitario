@@ -10,7 +10,7 @@ import br.com.bernardorufino.android.universitario.R;
 import br.com.bernardorufino.android.universitario.libs.tabbed.SynchronizedTabListenerAdapter;
 import br.com.bernardorufino.android.universitario.libs.tabbed.SynchronizedViewChangeListenerAdapter;
 import br.com.bernardorufino.android.universitario.view.activities.common.NavMenuFactory;
-import br.com.bernardorufino.android.universitario.view.fragments.AttendanceFragment;
+import br.com.bernardorufino.android.universitario.view.fragments.attendance.AttendanceFragment;
 import br.com.bernardorufino.android.universitario.view.fragments.CalendarFragment;
 import br.com.bernardorufino.android.universitario.view.fragments.ReportFragment;
 import com.google.common.collect.ImmutableList;

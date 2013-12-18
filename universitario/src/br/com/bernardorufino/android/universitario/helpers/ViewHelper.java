@@ -2,11 +2,20 @@ package br.com.bernardorufino.android.universitario.helpers;
 
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import static br.com.bernardorufino.android.universitario.definitions.Definitions.NAMESPACE;
 
 public class ViewHelper {
+
+    public static void flash(Fragment fragment, String message) {
+        flash(fragment.getActivity(), message);
+    }
+
+    public static void flash(Fragment fragment, int stringResource) {
+        flash(fragment.getActivity(), stringResource);
+    }
 
     public static void flash(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();

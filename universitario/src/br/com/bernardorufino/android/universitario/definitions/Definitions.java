@@ -4,7 +4,7 @@ public class Definitions {
 
     // Copacabana, Rio de Janeiro, Brazil =)
     public static final String NAMESPACE = Definitions.class.getPackage().getName();
-    public static final String LOG_TAG = "CONTROLLATOR";
+    public static final String LOG_TAG = "UNIVERSITARIO";
 
     public static class Storage {
 

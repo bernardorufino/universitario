@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/list"
+    xmlns:custom="http://schemas.android.com/apk/res/br.com.bernardorufino.android.universitario"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/NavMenuStyle">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:text="Menu" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/menu_list"
+        android:orientation="vertical">
+
+        <br.com.bernardorufino.android.universitario.view.components.NavMenuItemView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/menu_item_username"
+            custom:icon="@android:drawable/ic_lock_power_off"
+            custom:divider="below"/>
+
+        <br.com.bernardorufino.android.universitario.view.components.NavMenuItemView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/menu_item_info"
+            custom:icon="@android:drawable/ic_lock_silent_mode_off"
+            custom:text="Sobre"
+            custom:divider="below"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

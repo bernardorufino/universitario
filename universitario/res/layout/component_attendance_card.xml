@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="0dp"
+    android:layout_marginLeft="10dp">
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <Button
+            android:text="−"
+            android:id="@+id/comp_att_card_minus_one"
+            android:layout_alignParentLeft="true"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="40sp"
+            android:background="@drawable/card_left"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:textColor="@color/comp_att_card_btn" />
+
+        <Button
+            android:text="-.5"
+            android:id="@+id/comp_att_card_minus_fraction"
+            android:layout_toRightOf="@id/comp_att_card_minus_one"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:background="#F7F7F7"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:textColor="@color/comp_att_card_btn" />
+
+        <Button
+            android:text="+"
+            android:id="@+id/comp_att_card_plus_one"
+            android:layout_alignParentRight="true"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="40sp"
+            android:background="@drawable/card_right"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:textColor="@color/comp_att_card_btn" />
+
+        <Button
+            android:text="+.5"
+            android:id="@+id/comp_att_card_plus_fraction"
+            android:layout_toLeftOf="@id/comp_att_card_plus_one"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:background="#F7F7F7"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:textColor="@color/comp_att_card_btn" />
+
+        <TextView
+            android:id="@+id/comp_att_card_course_title"
+            android:layout_marginBottom="-5dp"
+            android:textSize="25sp"
+            android:gravity="bottom|center_horizontal"
+            android:text="CES-11"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_toLeftOf="@id/comp_att_card_plus_fraction"
+            android:layout_toRightOf="@id/comp_att_card_minus_fraction"
+            android:layout_alignParentTop="true"
+            android:background="#ffffff" />
+
+        <TextView
+            android:id="@+id/comp_att_card_course_prof"
+            android:paddingTop="-5dp"
+            android:textSize="14sp"
+            android:gravity="top|center_horizontal"
+            android:text="Armando"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/comp_att_card_plus_fraction"
+            android:layout_toRightOf="@id/comp_att_card_minus_fraction"
+            android:layout_below="@id/comp_att_card_course_title"
+            android:background="#ffffff" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="22dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="6dp"
+        android:paddingLeft="10dp"
+        android:background="@drawable/card_down">
+
+        <TextView
+            android:id="@+id/comp_att_card_absences_badge"
+            android:textSize="12sp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="9/10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

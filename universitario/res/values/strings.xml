@@ -4,5 +4,6 @@
     <string name="app_name">Universitário</string>
     <string name="network_error">Sem rede</string>
     <string name="generic_error">Ocorreu um erro</string>
+    <string name="empty_string"></string>
 
 </resources>

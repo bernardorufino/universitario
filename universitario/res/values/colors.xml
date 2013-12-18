@@ -2,6 +2,6 @@
 <resources>
 
     <color name="window_background">#cccccc</color>
-    <color name="nav_menu_background">#ffffff</color>
+    <color name="comp_att_card_btn">#666666</color>
 
 </resources>
