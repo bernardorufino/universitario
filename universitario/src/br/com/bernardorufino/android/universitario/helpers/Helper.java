@@ -8,7 +8,7 @@ import java.net.ConnectException;
 import java.net.UnknownHostException;
 import java.util.concurrent.atomic.AtomicLong;
 
-import static br.com.bernardorufino.android.universitario.definitions.Definitions.*;
+import static br.com.bernardorufino.android.universitario.application.Definitions.*;
 
 public class Helper {
 

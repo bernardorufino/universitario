@@ -1,19 +1,16 @@
 package br.com.bernardorufino.android.universitario.model.course;
 
-public class CourseManager {
+import br.com.bernardorufino.android.universitario.model.base.ModelManager;
 
-    private static class InstanceHolder {
-        private static final CourseManager INSTANCE = new CourseManager();
+public class CourseManager extends ModelManager<Course> {
+
+    protected CourseManager() {
+        super(CourseTable.NAME, CourseTable.Columns.ID);
     }
 
-    public static CourseManager getInstance() {
-        return InstanceHolder.INSTANCE;
+    /* Increase visibility for AttendanceManager */
+    @Override
+    public void loadModel(Course model) {
+        super.loadModel(model);
     }
-
-    // Prevents outside instantiation
-    private CourseManager() {
-
-    }
-
-
 }

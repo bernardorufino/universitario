@@ -3,12 +3,11 @@ package br.com.bernardorufino.android.universitario.view.fragments.attendance;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.ListView;
 import br.com.bernardorufino.android.universitario.R;
 import br.com.bernardorufino.android.universitario.helpers.Helper;
+import br.com.bernardorufino.android.universitario.model.ModelManagerFactory;
 import br.com.bernardorufino.android.universitario.model.attendance.Attendance;
 import br.com.bernardorufino.android.universitario.model.attendance.AttendanceManager;
 import br.com.bernardorufino.android.universitario.model.attendance.AttendanceProvider;
@@ -30,6 +29,17 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
     private AttendanceProvider mAttendanceProvider;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.fragment_attendance, menu);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_attendance, container, false);
     }
@@ -39,7 +49,8 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
         super.onActivityCreated(savedInstanceState);
         checkNotNull(mCardsList, "Robo not injecting, bad robot");
         /* TODO: Analyse life cycle to prevent leaks from spurious attendance providers created here */
-        mAttendanceProvider = AttendanceManager.getInstance().getAttendanceProvider();
+        AttendanceManager attendanceManager = ModelManagerFactory.getManager(getActivity(), AttendanceManager.class);
+        mAttendanceProvider = attendanceManager.getAttendanceProvider();
         mAdapter = new AttendanceCardAdapter(getActivity());
         mCardsList.setAdapter(mAdapter);
         getLoaderManager().initLoader(ATTENDANCES_LOADER, null, this);
@@ -52,7 +63,7 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
             case ATTENDANCES_LOADER:
                 return new AttendanceCardLoader(getActivity(), checkNotNull(mAttendanceProvider));
         }
-        throw new IllegalStateException("Trying to create an unknown loader");
+        throw new IllegalStateException("Trying to create an unknown loader.");
     }
 
     @Override

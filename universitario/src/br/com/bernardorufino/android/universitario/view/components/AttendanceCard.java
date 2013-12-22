@@ -9,7 +9,7 @@ import br.com.bernardorufino.android.universitario.helpers.Helper;
 import br.com.bernardorufino.android.universitario.model.attendance.Attendance;
 import br.com.bernardorufino.android.universitario.model.course.Course;
 
-import static br.com.bernardorufino.android.universitario.definitions.Definitions.Domain;
+import static br.com.bernardorufino.android.universitario.application.Definitions.Domain;
 import static com.google.common.base.Preconditions.*;
 
 public class AttendanceCard extends FrameLayout {

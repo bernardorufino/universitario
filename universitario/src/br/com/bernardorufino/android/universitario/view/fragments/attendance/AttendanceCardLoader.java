@@ -38,7 +38,7 @@ public class AttendanceCardLoader extends AsyncDataLoader<List<Attendance>> impl
     @Override
     public void onChange(Observable subject) {
         // Sanity checking
-        checkState(subject == mAttendanceProvider, "Observable received should be the attendance provider");
+        checkState(subject == mAttendanceProvider, "Observable received should be the attendance provider.");
         onContentChanged();
     }
 

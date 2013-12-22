@@ -1,3 +1,2 @@
 TODO
-Icrease icon size inside application (on ActionBar)
-Put a square behind icon outside application
+= Keep modelling model, I was in AttendanceManager, than in CourseManager

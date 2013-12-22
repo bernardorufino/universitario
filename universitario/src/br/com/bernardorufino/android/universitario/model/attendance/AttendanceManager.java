@@ -1,76 +1,66 @@
 package br.com.bernardorufino.android.universitario.model.attendance;
 
-import br.com.bernardorufino.android.universitario.libs.observing.AbstractObservable;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import br.com.bernardorufino.android.universitario.helpers.TableHelper;
+import br.com.bernardorufino.android.universitario.model.ModelManagerFactory;
+import br.com.bernardorufino.android.universitario.model.base.AbstractModelProvider;
+import br.com.bernardorufino.android.universitario.model.base.ModelManager;
 import br.com.bernardorufino.android.universitario.model.course.Course;
-import com.google.common.collect.Lists;
+import br.com.bernardorufino.android.universitario.model.course.CourseManager;
+import br.com.bernardorufino.android.universitario.model.course.CourseTable;
 
-import java.util.Collection;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
-public class AttendanceManager {
+public class AttendanceManager extends ModelManager<Attendance> {
 
-    private static class InstanceHolder {
-        private static final AttendanceManager INSTANCE = new AttendanceManager();
+    private CourseManager mCourseManager = ModelManagerFactory.getManager(CourseManager.class);
+
+    protected AttendanceManager() {
+        super(AttendanceTable.NAME, AttendanceTable.Columns.ID);
     }
 
-    public static AttendanceManager getInstance() {
-        return InstanceHolder.INSTANCE;
-    }
-
-    private Collection<AbstractAttendanceProvider> mAttendanceProviders = new LinkedList<>();
-
-    // Prevents outside instantiation
-    private AttendanceManager() {
-
-    }
-
-    public AttendanceProvider getAttendanceProvider(/* TODO: Refine search with ordering or selects */) {
+    public AttendanceProvider getAttendanceProvider() {
+        /* TODO: Make provider get models from the cache, or not */
         AbstractAttendanceProvider provider = new AbstractAttendanceProvider() {
             @Override
             public List<Attendance> getAttendances() {
-                /* TODO: Implement */
-                return Lists.newArrayList(
-                        new Attendance(new Course("CES-11", "Armando", 6*16), 8),
-                        new Attendance(new Course("CES-22", "Paulo Andre", 5*16), 10),
-                        new Attendance(new Course("EEA-45", "Douglas", 3*16), 8.5),
-                        new Attendance(new Course("ELE-55", "Duarte", 8*16), 3.5),
-                        new Attendance(new Course("ELE-31", "Manish", 6*16), 4.5),
-                        new Attendance(new Course("CES-30", "Parente", 6*16), 11),
-                        new Attendance(new Course("CES-28", "Clovis", 5*16), 9)
-                );
+                return getAttendances();
             }
         };
-        mAttendanceProviders.add(provider);
+        addProvider(provider);
         return provider;
     }
 
-    private void notifyProviderObservers() {
-        for (AbstractAttendanceProvider provider : mAttendanceProviders) provider.notifyObservers();
-    }
+    private static final String SELECT_ATTENDANCES_COURSES_QUERY =
+            "SELECT " +
+            TableHelper.columnInQuery(AttendanceTable.NAME, AttendanceTable.Columns.ID) + ", " +
+            TableHelper.columnInQuery(AttendanceTable.NAME, AttendanceTable.Columns.ABSENCES) + ", " +
+            TableHelper.columnInQuery(CourseTable.NAME, CourseTable.Columns.ID) + ", " +
+            TableHelper.columnInQuery(CourseTable.NAME, CourseTable.Columns.ALLOWED_ABSENCES) + " " +
+            "FROM " + AttendanceTable.NAME +
+            "INNER JOIN " + CourseTable.NAME + " " +
+            "ON " + CourseTable.Columns.ID + " = " + AttendanceTable.Columns.COURSE_ID +
+            "ORDER BY " + CourseTable.NAME + " ASC ";
 
-    public void insert(Attendance attendance) {
-        /* TODO: Implement */
-        notifyProviderObservers();
-    }
-
-    public void remove(Attendance attendance) { // Maybe key in parameter
-        /* TODO: Implement */
-        notifyProviderObservers();
-    }
-
-    public void replace(Attendance attendance) {
-        /* TODO: Implement */
-        notifyProviderObservers();
-    }
-
-    private static abstract class AbstractAttendanceProvider extends AbstractObservable implements AttendanceProvider {
-
-        /* For visibility issues */
-        @Override
-        protected void notifyObservers() {
-            super.notifyObservers();
+    private List<Attendance> getAttendances() {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(SELECT_ATTENDANCES_COURSES_QUERY, new String[] {});
+        List<Attendance> attendances = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            Course course = new Course(cursor);
+            mCourseManager.loadModel(course);
+            Attendance attendance = new Attendance(cursor, course);
+            loadModel(attendance);
+            attendances.add(attendance);
         }
+        return attendances;
     }
 
+    private static abstract class AbstractAttendanceProvider
+            extends AbstractModelProvider
+            implements AttendanceProvider {
+            /* Empty */
+    }
 }

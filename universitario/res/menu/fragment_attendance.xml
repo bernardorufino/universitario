@@ -6,8 +6,7 @@
         android:id="@+id/settings"
         android:showAsAction="always"
         android:title="Configurações"
-        android:icon="@android:drawable/ic_menu_preferences"
+        android:icon="@android:drawable/ic_lock_power_off"
         android:visible="true" />
-
 
 </menu>

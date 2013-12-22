@@ -1,31 +1,42 @@
 package br.com.bernardorufino.android.universitario.model.course;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import br.com.bernardorufino.android.universitario.helpers.CursorHelper;
+import br.com.bernardorufino.android.universitario.model.base.AbstractModel;
+
 import static com.google.common.base.Preconditions.*;
 
-public class Course {
+public class Course extends AbstractModel {
 
     private String mTitle;
     private String mProfessor;
-    private int mTotalClasses;
+    private int mAllowedAbsences;
 
-    public Course(String title, String professor, int totalClasses) {
-        mTitle = title;
-        mProfessor = professor;
-        mTotalClasses = totalClasses;
+    public Course() {
+        super();
+    }
+
+    public Course(Cursor cursor) {
+        CursorHelper c = new CursorHelper(cursor);
+        setId(c.getInt(CourseTable.NAME, CourseTable.Columns.ID));
+        mTitle = c.getString(CourseTable.NAME, CourseTable.Columns.TITLE);
+        mProfessor = c.getString(CourseTable.NAME, CourseTable.Columns.PROFESSOR);
+        setNewRecord(false);
     }
 
     public int getAllowedAbsences() {
-        /* TODO: Implement */
-        return (int) Math.floor(mTotalClasses * 0.15);
+        return mAllowedAbsences;
     }
 
-    public int getTotalClasses() {
-        return mTotalClasses;
+    public void setAllowedAbsences(int allowedAbsences) {
+        checkArgument(allowedAbsences > 0, "allowed absences must be greater than zero.");
+        mAllowedAbsences = allowedAbsences;
     }
 
     public void setTotalClasses(int totalClasses) {
-        checkArgument(totalClasses > 0);
-        mTotalClasses = totalClasses;
+        checkArgument(totalClasses > 0, "total classes must be greater than zero.");
+        setAllowedAbsences((int) Math.floor(totalClasses * 0.15));
     }
 
     public String getTitle() {
@@ -44,25 +55,29 @@ public class Course {
         mProfessor = professor;
     }
 
+    public ContentValues getContentValues() {
+        ContentValues values = new ContentValues();
+        if (!isNewRecord()) values.put(CourseTable.Columns.ID, getId());
+        values.put(CourseTable.Columns.TITLE, mTitle);
+        values.put(CourseTable.Columns.PROFESSOR, mProfessor);
+        values.put(CourseTable.Columns.ALLOWED_ABSENCES, mAllowedAbsences);
+        return values;
+    }
+
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Course course = (Course) o;
-
-        if (mTotalClasses != course.mTotalClasses) return false;
-        if (mProfessor != null ? !mProfessor.equals(course.mProfessor) : course.mProfessor != null) return false;
-        if (mTitle != null ? !mTitle.equals(course.mTitle) : course.mTitle != null) return false;
-
-        return true;
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof Course)) return false;
+        Course that = (Course) object;
+        /* TODO: Allow comparison of new records */
+        return !isNewRecord() && !that.isNewRecord() && getId() == that.getId();
     }
 
     @Override
     public int hashCode() {
-        int result = mTitle != null ? mTitle.hashCode() : 0;
-        result = 31 * result + (mProfessor != null ? mProfessor.hashCode() : 0);
-        result = 31 * result + mTotalClasses;
+        /* TODO: Produce proper hashCode for new records */
+        int result = (isNewRecord() ? 1 : 0);
+        result = 31 * result + getId();
         return result;
     }
 }

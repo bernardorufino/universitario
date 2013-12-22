@@ -5,7 +5,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
-import static br.com.bernardorufino.android.universitario.definitions.Definitions.NAMESPACE;
+import static br.com.bernardorufino.android.universitario.application.Definitions.NAMESPACE;
 
 public class ViewHelper {
 
