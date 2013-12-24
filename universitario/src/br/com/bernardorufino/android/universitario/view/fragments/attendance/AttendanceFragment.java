@@ -4,13 +4,18 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.*;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import br.com.bernardorufino.android.universitario.R;
 import br.com.bernardorufino.android.universitario.helpers.Helper;
-import br.com.bernardorufino.android.universitario.model.ModelManagerFactory;
+import br.com.bernardorufino.android.universitario.helpers.ViewHelper;
+import br.com.bernardorufino.android.universitario.model.ModelManagers;
 import br.com.bernardorufino.android.universitario.model.attendance.Attendance;
 import br.com.bernardorufino.android.universitario.model.attendance.AttendanceManager;
 import br.com.bernardorufino.android.universitario.model.attendance.AttendanceProvider;
+import br.com.bernardorufino.android.universitario.model.course.Course;
+import br.com.bernardorufino.android.universitario.view.fragments.CourseEditFragment;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 
@@ -36,7 +41,20 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.fragment_attendance, menu);
+        menu.clear();
+        inflater.inflate(R.menu.actions_fragment_attendance, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.attendance_action_new:
+                Course newCourse = new Course();
+                CourseEditFragment dialog = new CourseEditFragment(newCourse);
+                dialog.show(getFragmentManager(), "course_edit");
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -49,11 +67,46 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
         super.onActivityCreated(savedInstanceState);
         checkNotNull(mCardsList, "Robo not injecting, bad robot");
         /* TODO: Analyse life cycle to prevent leaks from spurious attendance providers created here */
-        AttendanceManager attendanceManager = ModelManagerFactory.getManager(getActivity(), AttendanceManager.class);
+        AttendanceManager attendanceManager = ModelManagers.get(getActivity(), AttendanceManager.class);
         mAttendanceProvider = attendanceManager.getAttendanceProvider();
         mAdapter = new AttendanceCardAdapter(getActivity());
         mCardsList.setAdapter(mAdapter);
+        registerForContextMenu(mCardsList);
         getLoaderManager().initLoader(ATTENDANCES_LOADER, null, this);
+    }
+
+    private TextView mContextHeader;
+
+    private TextView getContextHeader(String title) {
+        if (mContextHeader == null || !ViewHelper.makeOrphan(mContextHeader)) {
+            Helper.log("Inflating view for context menu of attendances");
+            mContextHeader = (TextView) LayoutInflater.from(getActivity())
+                    .inflate(R.layout.component_context_menu_header_attendance, null);
+        }
+        mContextHeader.setText(title);
+        return mContextHeader;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, view, menuInfo);
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        Attendance attendance = mAdapter.getItem(info.position);
+        Course course = attendance.getCourse();
+        View header = getContextHeader(course.getTitle());
+        menu.setHeaderView(header);
+        getActivity().getMenuInflater().inflate(R.menu.context_component_attendance_card, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.ctx_menu_comp_att_card_edit:
+                ViewHelper.flash(this, "Edit");
+                return true;
+        }
+        return super.onContextItemSelected(item);
     }
 
     @Override

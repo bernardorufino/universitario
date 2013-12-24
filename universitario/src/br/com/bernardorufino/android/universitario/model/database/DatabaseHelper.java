@@ -19,6 +19,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
+    public void onOpen(SQLiteDatabase db) {
+        /* TODO: Debug purposes, delete this after */
+//        db.execSQL(dropQuery(AttendanceTable.NAME));
+//        db.execSQL(dropQuery(CourseTable.NAME));
+//        db.execSQL(AttendanceTable.CREATE_QUERY);
+//        db.execSQL(CourseTable.CREATE_QUERY);
+    }
+
+    @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(AttendanceTable.CREATE_QUERY);
         db.execSQL(CourseTable.CREATE_QUERY);

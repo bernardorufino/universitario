@@ -5,7 +5,6 @@ import android.database.Cursor;
 import br.com.bernardorufino.android.universitario.helpers.CursorHelper;
 import br.com.bernardorufino.android.universitario.model.base.AbstractModel;
 import br.com.bernardorufino.android.universitario.model.course.Course;
-import br.com.bernardorufino.android.universitario.model.course.CourseTable;
 
 import static com.google.common.base.Preconditions.*;
 
@@ -20,8 +19,8 @@ public class Attendance extends AbstractModel {
 
     public Attendance(Cursor cursor, Course course) {
         CursorHelper c = new CursorHelper(cursor);
-        setId(c.getInt(CourseTable.NAME, CourseTable.Columns.ID));
-        mAbsences = c.getDouble(CourseTable.NAME, CourseTable.Columns.ALLOWED_ABSENCES);
+        setId(c.getInt(AttendanceTable.NAME, AttendanceTable.Columns.ID));
+        mAbsences = c.getDouble(AttendanceTable.NAME, AttendanceTable.Columns.ABSENCES);
         setCourse(course);
         setNewRecord(false);
     }

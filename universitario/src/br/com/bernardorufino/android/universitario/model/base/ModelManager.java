@@ -36,7 +36,10 @@ public abstract class ModelManager<T extends Model> {
 
     protected void notifyProviderObservers() {
         for (AbstractModelProvider provider : mModelProviders) provider.notifyObservers();
+        onNotifyProviderObservers();
     }
+
+    protected void onNotifyProviderObservers() { /* Override */ }
 
     protected void addProvider(AbstractModelProvider modelProvider) {
         mModelProviders.add(modelProvider);
@@ -62,18 +65,23 @@ public abstract class ModelManager<T extends Model> {
         notifyProviderObservers();
     }
 
-    public void delete(int id) {
-        SQLiteDatabase db = getWritableDatabase();
-        int rows = db.delete(mTableName, mColumnIdName + " = " + id, null);
-        checkState(rows == 1, "Expected to modify one record, but modified " + rows);
-        notifyProviderObservers();
-    }
-
     public void update(T model) {
         SQLiteDatabase db = getWritableDatabase();
         String where = mColumnIdName + " = " + model.getId();
         int rows = db.update(mTableName, model.getContentValues(), where, null);
         checkState(rows == 1, "Expected to modify one record, but modified " + rows);
+    }
+
+    public void save(T model) {
+        if (model.isNewRecord()) insert(model);
+        else update(model);
+    }
+
+    public void delete(int id) {
+        SQLiteDatabase db = getWritableDatabase();
+        int rows = db.delete(mTableName, mColumnIdName + " = " + id, null);
+        checkState(rows == 1, "Expected to modify one record, but modified " + rows);
+        notifyProviderObservers();
     }
 
     public SQLiteDatabase getReadableDatabase() {

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/course_edit_title"
+        android:text="@string/to_be_changed_programmatically"
+        style="@style/OrangeHeader"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/dark_orange" />
+
+    <RelativeLayout
+        android:orientation="vertical"
+        style="@style/CourseEditBody">
+
+        <NumberPicker
+            android:id="@+id/edit_course_allowed_absences"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:layout_marginLeft="10dp" />
+
+        <EditText
+            android:id="@+id/edit_course_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/edit_course_allowed_absences"
+            android:layout_marginBottom="8dp"
+            android:hint="Curso"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/edit_course_professor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_course_title"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/edit_course_allowed_absences"
+            android:hint="Professor"
+            android:inputType="text" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        style="@style/CourseEditActions">
+
+        <Button
+            android:id="@+id/course_edit_cancel_button"
+            style="@style/CourseEditButton"
+            android:drawableLeft="@drawable/ic_action_cancel"
+            android:text="Desistir" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/light_bg" />
+
+        <Button
+            android:id="@+id/course_edit_ok_button"
+            style="@style/CourseEditButton"
+            android:drawableLeft="@drawable/ic_action_accept"
+            android:text="@string/to_be_changed_programmatically" />
+
+    </LinearLayout>
+
+</LinearLayout>

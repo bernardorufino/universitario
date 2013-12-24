@@ -12,6 +12,8 @@ public class CourseTable implements Table {
         public static final String ALLOWED_ABSENCES = "allowed_absences";
         public static final String TITLE = "title";
         public static final String PROFESSOR = "professor";
+
+        public static final String[] ALL = { ID, ALLOWED_ABSENCES, TITLE, PROFESSOR };
     }
 
     public static final String CREATE_QUERY =

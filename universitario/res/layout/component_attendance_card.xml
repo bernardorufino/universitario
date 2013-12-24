@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res/br.com.bernardorufino.android.universitario"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="5dp"
     android:layout_marginRight="10dp"
-    android:layout_marginBottom="0dp"
-    android:layout_marginLeft="10dp">
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="10dp"
+    android:descendantFocusability="blocksDescendants">
 
     <RelativeLayout
+        android:descendantFocusability="blocksDescendants"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="60dp">
@@ -26,7 +30,7 @@
             android:background="@drawable/card_left"
             android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:textColor="@color/comp_att_card_btn" />
+            android:textColor="@color/light_black" />
 
         <Button
             android:text="-.5"
@@ -35,10 +39,10 @@
             android:textStyle="bold"
             android:gravity="center"
             android:textSize="20sp"
-            android:background="#F7F7F7"
+            android:background="@color/light_grey"
             android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:textColor="@color/comp_att_card_btn" />
+            android:textColor="@color/light_black" />
 
         <Button
             android:text="+"
@@ -50,7 +54,7 @@
             android:background="@drawable/card_right"
             android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:textColor="@color/comp_att_card_btn" />
+            android:textColor="@color/light_black" />
 
         <Button
             android:text="+.5"
@@ -59,37 +63,37 @@
             android:textStyle="bold"
             android:gravity="center"
             android:textSize="20sp"
-            android:background="#F7F7F7"
+            android:background="@color/light_grey"
             android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:textColor="@color/comp_att_card_btn" />
+            android:textColor="@color/light_black" />
 
         <TextView
             android:id="@+id/comp_att_card_course_title"
             android:layout_marginBottom="-5dp"
             android:textSize="25sp"
             android:gravity="bottom|center_horizontal"
-            android:text="CES-11"
+            android:text="@string/to_be_changed_programmatically"
             android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="38dp"
             android:layout_toLeftOf="@id/comp_att_card_plus_fraction"
             android:layout_toRightOf="@id/comp_att_card_minus_fraction"
             android:layout_alignParentTop="true"
-            android:background="#ffffff" />
+            android:background="#FFFFFF" />
 
         <TextView
             android:id="@+id/comp_att_card_course_prof"
             android:paddingTop="-5dp"
             android:textSize="14sp"
             android:gravity="top|center_horizontal"
-            android:text="Armando"
+            android:text="@string/to_be_changed_programmatically"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toLeftOf="@id/comp_att_card_plus_fraction"
             android:layout_toRightOf="@id/comp_att_card_minus_fraction"
             android:layout_below="@id/comp_att_card_course_title"
-            android:background="#ffffff" />
+            android:background="#FFFFFF" />
 
     </RelativeLayout>
 
@@ -121,7 +125,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginTop="-4dp"
-            android:text="9/10"
+            android:text="@string/to_be_changed_programmatically"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

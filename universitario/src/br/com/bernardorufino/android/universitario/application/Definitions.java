@@ -1,5 +1,6 @@
 package br.com.bernardorufino.android.universitario.application;
 
+/* TODO: <FEATURE> Make most alarming absences up in the list  */
 public class Definitions {
 
     public static final String APP_NAME = "Universitário";

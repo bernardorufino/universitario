@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="semi_transparent_white">#55FFFFFF</color>
+    <color name="semi_transparent_black">#22000000</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="window_background">#CCCCCC</color>
+    <color name="light_bg">#EEEEEE</color>
+    <color name="orange">#F3832C</color>
+    <color name="dark_orange">#D17027</color>
+    <color name="light_grey">#F7F7F7</color>
+    <color name="grey">#DDDDDD</color>
+    <color name="dark_grey">#AAAAAA</color>
+    <color name="light_black">#666666</color>
+
     <!-- Thresholds are set on Definitions -->
     <color name="absence_ok">#81C479</color>
     <color name="absence_warning">#E2CC88</color>
     <color name="absence_overflow">#DBB1A7</color>
     <color name="absence_remaining">#CCCCCC</color>
-
-    <color name="window_background">#CCCCCC</color>
-    <color name="comp_att_card_btn">#666666</color>
 
 </resources>

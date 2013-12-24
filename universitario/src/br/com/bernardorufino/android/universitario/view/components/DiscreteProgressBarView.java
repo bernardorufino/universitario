@@ -80,8 +80,8 @@ public class DiscreteProgressBarView extends LinearLayout {
 
     public DiscreteProgressBarView setProgress(float current, int total) {
         removeAllViews();
-        setTotal(total);
         setCurrent(current);
+        setTotal(total);
         return this;
     }
 

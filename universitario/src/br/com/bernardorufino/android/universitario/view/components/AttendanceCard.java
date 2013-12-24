@@ -39,6 +39,10 @@ public class AttendanceCard extends FrameLayout {
         updateView();
     }
 
+    public Attendance getAttendance() {
+        return mAttendance;
+    }
+
     private void updateView() {
         Helper.log("AttendanceCard.updateView()");
         Course course = mAttendance.getCourse();

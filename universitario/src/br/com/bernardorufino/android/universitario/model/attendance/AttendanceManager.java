@@ -3,7 +3,7 @@ package br.com.bernardorufino.android.universitario.model.attendance;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import br.com.bernardorufino.android.universitario.helpers.TableHelper;
-import br.com.bernardorufino.android.universitario.model.ModelManagerFactory;
+import br.com.bernardorufino.android.universitario.model.ModelManagers;
 import br.com.bernardorufino.android.universitario.model.base.AbstractModelProvider;
 import br.com.bernardorufino.android.universitario.model.base.ModelManager;
 import br.com.bernardorufino.android.universitario.model.course.Course;
@@ -15,10 +15,24 @@ import java.util.List;
 
 public class AttendanceManager extends ModelManager<Attendance> {
 
-    private CourseManager mCourseManager = ModelManagerFactory.getManager(CourseManager.class);
+    /* Lazy loading to prevent dead-lock on ModelManagers */
+    private CourseManager mCourseManager;
 
-    protected AttendanceManager() {
+    public AttendanceManager() {
         super(AttendanceTable.NAME, AttendanceTable.Columns.ID);
+    }
+
+    private CourseManager getCourseManager() {
+        if (mCourseManager == null) {
+            mCourseManager = ModelManagers.get(CourseManager.class);
+        }
+        return mCourseManager;
+    }
+
+    /* Increase visibility for access from CourseManager */
+    @Override
+    public void notifyProviderObservers() {
+        super.notifyProviderObservers();
     }
 
     public AttendanceProvider getAttendanceProvider() {
@@ -26,7 +40,7 @@ public class AttendanceManager extends ModelManager<Attendance> {
         AbstractAttendanceProvider provider = new AbstractAttendanceProvider() {
             @Override
             public List<Attendance> getAttendances() {
-                return getAttendances();
+                return AttendanceManager.this.getAttendances();
             }
         };
         addProvider(provider);
@@ -35,14 +49,13 @@ public class AttendanceManager extends ModelManager<Attendance> {
 
     private static final String SELECT_ATTENDANCES_COURSES_QUERY =
             "SELECT " +
-            TableHelper.columnInQuery(AttendanceTable.NAME, AttendanceTable.Columns.ID) + ", " +
-            TableHelper.columnInQuery(AttendanceTable.NAME, AttendanceTable.Columns.ABSENCES) + ", " +
-            TableHelper.columnInQuery(CourseTable.NAME, CourseTable.Columns.ID) + ", " +
-            TableHelper.columnInQuery(CourseTable.NAME, CourseTable.Columns.ALLOWED_ABSENCES) + " " +
-            "FROM " + AttendanceTable.NAME +
+            TableHelper.columnsInQuery(AttendanceTable.NAME, AttendanceTable.Columns.ALL) + ", " +
+            TableHelper.columnsInQuery(CourseTable.NAME, CourseTable.Columns.ALL) + " " +
+            "FROM " + AttendanceTable.NAME + " " +
             "INNER JOIN " + CourseTable.NAME + " " +
-            "ON " + CourseTable.Columns.ID + " = " + AttendanceTable.Columns.COURSE_ID +
-            "ORDER BY " + CourseTable.NAME + " ASC ";
+            "ON " + TableHelper.columnAlias(CourseTable.NAME, CourseTable.Columns.ID)  + " = " +
+                    TableHelper.columnAlias(AttendanceTable.NAME, AttendanceTable.Columns.COURSE_ID) + " " +
+            "ORDER BY " + TableHelper.columnAlias(CourseTable.NAME, CourseTable.Columns.TITLE) + " ASC";
 
     private List<Attendance> getAttendances() {
         SQLiteDatabase db = getReadableDatabase();
@@ -50,7 +63,7 @@ public class AttendanceManager extends ModelManager<Attendance> {
         List<Attendance> attendances = new ArrayList<>();
         while (cursor.moveToNext()) {
             Course course = new Course(cursor);
-            mCourseManager.loadModel(course);
+            getCourseManager().loadModel(course);
             Attendance attendance = new Attendance(cursor, course);
             loadModel(attendance);
             attendances.add(attendance);

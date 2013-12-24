@@ -1,6 +1,6 @@
 package br.com.bernardorufino.android.universitario.model.base;
 
-import br.com.bernardorufino.android.universitario.libs.observing.AbstractObservable;
+import br.com.bernardorufino.android.universitario.ext.observing.AbstractObservable;
 
 public abstract class AbstractModelProvider extends AbstractObservable {
 

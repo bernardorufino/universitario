@@ -1,6 +1,6 @@
 package br.com.bernardorufino.android.universitario.model.attendance;
 
-import br.com.bernardorufino.android.universitario.libs.observing.Observable;
+import br.com.bernardorufino.android.universitario.ext.observing.Observable;
 
 import java.util.List;
 

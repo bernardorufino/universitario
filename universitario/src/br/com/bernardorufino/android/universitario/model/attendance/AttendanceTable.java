@@ -11,6 +11,8 @@ public class AttendanceTable implements Table {
         public static final String ID = "_id";
         public static final String COURSE_ID = "course_id";
         public static final String ABSENCES = "absences";
+
+        public static final String[] ALL = { ID, COURSE_ID, ABSENCES };
     }
 
     public static final String CREATE_QUERY =

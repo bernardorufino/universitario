@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import br.com.bernardorufino.android.universitario.helpers.CursorHelper;
 import br.com.bernardorufino.android.universitario.model.base.AbstractModel;
+import com.google.common.base.Strings;
 
 import static com.google.common.base.Preconditions.*;
 
@@ -22,6 +23,7 @@ public class Course extends AbstractModel {
         setId(c.getInt(CourseTable.NAME, CourseTable.Columns.ID));
         mTitle = c.getString(CourseTable.NAME, CourseTable.Columns.TITLE);
         mProfessor = c.getString(CourseTable.NAME, CourseTable.Columns.PROFESSOR);
+        mAllowedAbsences = c.getInt(CourseTable.NAME, CourseTable.Columns.ALLOWED_ABSENCES);
         setNewRecord(false);
     }
 
@@ -44,6 +46,8 @@ public class Course extends AbstractModel {
     }
 
     public void setTitle(String title) {
+        title = Strings.nullToEmpty(title).trim();
+        checkArgument(!title.isEmpty(), "title can't be blank.");
         mTitle = title;
     }
 
@@ -52,6 +56,8 @@ public class Course extends AbstractModel {
     }
 
     public void setProfessor(String professor) {
+        professor = Strings.nullToEmpty(professor).trim();
+        checkArgument(!professor.isEmpty(), "professor can't be blank.");
         mProfessor = professor;
     }
 

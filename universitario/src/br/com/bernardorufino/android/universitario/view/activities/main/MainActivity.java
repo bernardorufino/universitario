@@ -7,8 +7,8 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import br.com.bernardorufino.android.universitario.R;
-import br.com.bernardorufino.android.universitario.libs.tabbed.SynchronizedTabListenerAdapter;
-import br.com.bernardorufino.android.universitario.libs.tabbed.SynchronizedViewChangeListenerAdapter;
+import br.com.bernardorufino.android.universitario.ext.tabbed.SynchronizedTabListenerAdapter;
+import br.com.bernardorufino.android.universitario.ext.tabbed.SynchronizedViewChangeListenerAdapter;
 import br.com.bernardorufino.android.universitario.view.activities.common.NavMenuFactory;
 import br.com.bernardorufino.android.universitario.view.fragments.attendance.AttendanceFragment;
 import br.com.bernardorufino.android.universitario.view.fragments.CalendarFragment;
@@ -72,6 +72,12 @@ public class MainActivity extends RoboFragmentActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actions_activity_main, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -79,12 +85,6 @@ public class MainActivity extends RoboFragmentActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
     }
 
     /*

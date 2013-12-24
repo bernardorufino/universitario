@@ -1,11 +1,11 @@
 package br.com.bernardorufino.android.universitario.view.fragments.attendance;
 
 import android.content.Context;
-import br.com.bernardorufino.android.universitario.libs.loader.AsyncDataLoader;
+import br.com.bernardorufino.android.universitario.ext.loader.AsyncDataLoader;
 import br.com.bernardorufino.android.universitario.model.attendance.Attendance;
 import br.com.bernardorufino.android.universitario.model.attendance.AttendanceProvider;
-import br.com.bernardorufino.android.universitario.libs.observing.Observable;
-import br.com.bernardorufino.android.universitario.libs.observing.Observer;
+import br.com.bernardorufino.android.universitario.ext.observing.Observable;
+import br.com.bernardorufino.android.universitario.ext.observing.Observer;
 
 import java.util.List;
 
