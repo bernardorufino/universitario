@@ -29,6 +29,12 @@ public class AttendanceManager extends ModelManager<Attendance> {
         return mCourseManager;
     }
 
+    public void deleteWithDependencies(Attendance attendance) {
+        Course course = attendance.getCourse();
+        getCourseManager().delete(course.getId());
+        delete(attendance.getId());
+    }
+
     /* Increase visibility for access from CourseManager */
     @Override
     public void notifyProviderObservers() {

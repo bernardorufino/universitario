@@ -6,13 +6,10 @@ import br.com.bernardorufino.android.universitario.R;
 
 import java.net.ConnectException;
 import java.net.UnknownHostException;
-import java.util.concurrent.atomic.AtomicLong;
 
-import static br.com.bernardorufino.android.universitario.application.Definitions.*;
+import static br.com.bernardorufino.android.universitario.application.Definitions.LOG_TAG;
 
 public class Helper {
-
-    public static final AtomicLong timer = new AtomicLong(System.nanoTime());
 
 //    public static boolean hasPlayServices(Context context) {
 //        return GooglePlayServicesUtil.isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS;
@@ -25,19 +22,6 @@ public class Helper {
     public static void logException(Exception e) {
         if (e != null) Log.e(LOG_TAG, e.toString(), e);
         else Log.d(LOG_TAG, "Logging null exception");
-    }
-
-    public static long time() {
-        long window, now = System.nanoTime();
-        synchronized (timer) {
-            window = now - timer.get();
-            timer.set(now);
-        }
-        return window;
-    }
-
-    public static long millisTime() {
-        return time() / 1000000;
     }
 
     public static boolean isNetworkException(Exception e) {

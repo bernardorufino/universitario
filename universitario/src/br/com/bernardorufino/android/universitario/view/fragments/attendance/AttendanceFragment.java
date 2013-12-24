@@ -1,5 +1,6 @@
 package br.com.bernardorufino.android.universitario.view.fragments.attendance;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -49,9 +50,7 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.attendance_action_new:
-                Course newCourse = new Course();
-                CourseEditFragment dialog = new CourseEditFragment(newCourse);
-                dialog.show(getFragmentManager(), "course_edit");
+                CourseEditFragment.show(new Course(), getFragmentManager());
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -94,6 +93,7 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
         Attendance attendance = mAdapter.getItem(info.position);
         Course course = attendance.getCourse();
         View header = getContextHeader(course.getTitle());
+        /* TODO: Get rid of the blue line below the header */
         menu.setHeaderView(header);
         getActivity().getMenuInflater().inflate(R.menu.context_component_attendance_card, menu);
     }
@@ -101,9 +101,14 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        Attendance attendance = mAdapter.getItem(info.position);
+        Course course = attendance.getCourse();
         switch (item.getItemId()) {
             case R.id.ctx_menu_comp_att_card_edit:
-                ViewHelper.flash(this, "Edit");
+                CourseEditFragment.show(course, getFragmentManager());
+                return true;
+            case R.id.ctx_menu_comp_att_card_delete:
+                new DeleteAttendanceTask().execute(attendance);
                 return true;
         }
         return super.onContextItemSelected(item);
@@ -129,5 +134,35 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
     public void onLoaderReset(Loader<List<Attendance>> loader) {
         Helper.log("Loader reset");
         mAdapter.update(Collections.<Attendance>emptyList());
+    }
+
+    private class DeleteAttendanceTask extends AsyncTask<Attendance, Void, Exception> {
+
+        private Attendance mAttendance;
+
+        @Override
+        protected Exception doInBackground(Attendance... attendances) {
+            checkArgument(attendances.length == 1);
+            mAttendance = checkNotNull(attendances[0]);
+            AttendanceManager attendanceManager = ModelManagers.get(getActivity(), AttendanceManager.class);
+            try {
+                attendanceManager.deleteWithDependencies(mAttendance);
+                return null;
+            } catch (Exception e) {
+                return e;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Exception e) {
+            if (e == null) {
+                /* TODO: Animate view */
+                String course = mAttendance.getCourse().getTitle();
+                ViewHelper.flash(getActivity(), course + " removido");
+            } else {
+                Helper.log("Error deleting attendance: " + e.getMessage());
+                ViewHelper.flash(getActivity(), "Ocorreu um erro =(");
+            }
+        }
     }
 }

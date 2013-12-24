@@ -6,4 +6,8 @@
         android:id="@+id/ctx_menu_comp_att_card_edit"
         android:title="Editar" />
 
+    <item
+        android:id="@+id/ctx_menu_comp_att_card_delete"
+        android:title="Remover" />
+
 </menu>

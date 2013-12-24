@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.graphics.drawable.RotateDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import br.com.bernardorufino.android.universitario.helpers.AnimationHelper;
 import br.com.bernardorufino.android.universitario.helpers.Helper;
 import br.com.bernardorufino.android.universitario.helpers.ViewHelper;
 import br.com.bernardorufino.android.universitario.model.ModelManagers;
+import br.com.bernardorufino.android.universitario.model.attendance.Attendance;
 import br.com.bernardorufino.android.universitario.model.course.Course;
 import br.com.bernardorufino.android.universitario.model.course.CourseManager;
 import com.google.common.collect.ImmutableList;
@@ -31,9 +33,16 @@ public class CourseEditFragment extends RoboDialogFragment {
 
     private static final String NEW_COURSE_TITLE = "Novo Curso";
     private static final String NEW_COURSE_OK_BUTTON = "Criar";
-
     private static final String EDIT_COURSE_TITLE = "Editar Curso";
     private static final String EDIT_COURSE_OK_BUTTON = "Salvar";
+    private static final int DEFAULT_ALLOWED_ABSENCES = 8;
+    private static final String DEFAULT_TAG = "course_edit";
+
+    public static CourseEditFragment show(Course course, FragmentManager manager) {
+        CourseEditFragment fragment = new CourseEditFragment(course);
+        fragment.show(manager, DEFAULT_TAG + course.hashCode());
+        return fragment;
+    }
 
     @InjectView(R.id.course_edit_title) private TextView mTitle;
     @InjectView(R.id.course_edit_ok_button) private Button mOkButton;
@@ -74,7 +83,7 @@ public class CourseEditFragment extends RoboDialogFragment {
         if (mCourse.isNewRecord()) {
             mTitle.setText(NEW_COURSE_TITLE);
             mOkButton.setText(NEW_COURSE_OK_BUTTON);
-            mCourseAllowedAbsences.setValue(8);
+            mCourseAllowedAbsences.setValue(DEFAULT_ALLOWED_ABSENCES);
         } else {
             mTitle.setText(EDIT_COURSE_TITLE);
             mOkButton.setText(EDIT_COURSE_OK_BUTTON);
@@ -92,7 +101,6 @@ public class CourseEditFragment extends RoboDialogFragment {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         return dialog;
-
     }
 
     private View.OnClickListener mOnOkClickListener = new View.OnClickListener() {
@@ -104,6 +112,7 @@ public class CourseEditFragment extends RoboDialogFragment {
                 mCourse.setAllowedAbsences(mCourseAllowedAbsences.getValue());
             } catch (IllegalArgumentException e) {
                 Helper.log("Error saving course: " + e.getMessage());
+                ViewHelper.flash(getActivity(), "Dados invalidos");
                 return;
             }
             new SaveCourseTask().execute();
@@ -150,7 +159,7 @@ public class CourseEditFragment extends RoboDialogFragment {
                 dismiss();
             } else {
                 Helper.log("Error saving course: " + e.getMessage());
-                ViewHelper.flash(CourseEditFragment.this, "Ocorreu um erro =(");
+                ViewHelper.flash(getActivity(), "Ocorreu um erro =(");
             }
         }
     }

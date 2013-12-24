@@ -39,12 +39,6 @@ public class CourseManager extends ModelManager<Course> {
         getAttendanceManager().notifyProviderObservers();
     }
 
-    @Override
-    public void delete(int id) {
-        /* TODO: Implement */
-        throw new AssertionError("TODO: Delete corresponding attendance");
-    }
-
     /* Increase visibility for access from AttendanceManager */
     @Override
     public void loadModel(Course model) {

@@ -42,6 +42,10 @@ public class Attendance extends AbstractModel {
         mAbsences = absences;
     }
 
+    public void increaseAbsences(double delta) {
+        setAbsences(mAbsences + delta);
+    }
+
     public ContentValues getContentValues() {
         ContentValues values = new ContentValues();
         if (!isNewRecord()) values.put(AttendanceTable.Columns.ID, getId());

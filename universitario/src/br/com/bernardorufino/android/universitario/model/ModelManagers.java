@@ -7,6 +7,7 @@ import com.google.common.base.Throwables;
 import com.google.common.collect.MutableClassToInstanceMap;
 
 /* Ensures every ModelManager uses only one database connection */
+/* TODO: One method for every manager! */
 public class ModelManagers {
 
     private static DatabaseHelper sDatabaseHelper = null;

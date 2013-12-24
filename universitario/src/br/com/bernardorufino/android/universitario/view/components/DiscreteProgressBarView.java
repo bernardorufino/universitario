@@ -80,8 +80,8 @@ public class DiscreteProgressBarView extends LinearLayout {
 
     public DiscreteProgressBarView setProgress(float current, int total) {
         removeAllViews();
-        setCurrent(current);
         setTotal(total);
+        setCurrent(current);
         return this;
     }
 
@@ -96,7 +96,8 @@ public class DiscreteProgressBarView extends LinearLayout {
 
     public void setCurrent(float current) {
         checkArgument(current >= 0, "current attribute must be greater than or equal to 0.");
-        checkArgument(current <= mTotal, "current attribute must be smaller than the total.");
+        checkArgument(current <= mTotal, "current attribute, which is " + current + ", " +
+                "must be smaller than the total of " + mTotal + ".");
         mCurrent = current;
     }
 
