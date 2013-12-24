@@ -70,6 +70,7 @@ public abstract class ModelManager<T extends Model> {
         String where = mColumnIdName + " = " + model.getId();
         int rows = db.update(mTableName, model.getContentValues(), where, null);
         checkState(rows == 1, "Expected to modify one record, but modified " + rows);
+        notifyProviderObservers();
     }
 
     public void save(T model) {

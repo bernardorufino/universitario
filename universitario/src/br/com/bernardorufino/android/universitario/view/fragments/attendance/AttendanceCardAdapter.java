@@ -6,7 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import br.com.bernardorufino.android.universitario.helpers.Helper;
+import br.com.bernardorufino.android.universitario.model.ModelManagers;
 import br.com.bernardorufino.android.universitario.model.attendance.Attendance;
+import br.com.bernardorufino.android.universitario.model.attendance.AttendanceManager;
 import br.com.bernardorufino.android.universitario.view.components.AttendanceCard;
 
 import java.util.Collections;
@@ -51,8 +53,7 @@ public class AttendanceCardAdapter extends BaseAdapter {
             new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... params) {
-                    Helper.log("[-]");
-//                    ModelManagers.get(AttendanceManager.class).update(attendance);
+                    ModelManagers.get(AttendanceManager.class).update(attendance);
                     return null;
                 }
             }.execute();
@@ -65,8 +66,9 @@ public class AttendanceCardAdapter extends BaseAdapter {
                               ? (AttendanceCard) convertView
                               : new AttendanceCard(mContext);
         Attendance item = checkNotNull(getItem(position));
-        card.setAttendance(item);
+        Helper.log("Adapter.getView() called for " + item.getCourse().getTitle());
         card.setOnAttendanceUpdateListener(mOnAttendanceUpdateListener);
+        if (card.getAttendance() != item) card.setAttendance(item);
         return card;
     }
 }

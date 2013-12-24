@@ -2,10 +2,11 @@ package br.com.bernardorufino.android.universitario.view.fragments.attendance;
 
 import android.content.Context;
 import br.com.bernardorufino.android.universitario.ext.loader.AsyncDataLoader;
-import br.com.bernardorufino.android.universitario.model.attendance.Attendance;
-import br.com.bernardorufino.android.universitario.model.attendance.AttendanceProvider;
 import br.com.bernardorufino.android.universitario.ext.observing.Observable;
 import br.com.bernardorufino.android.universitario.ext.observing.Observer;
+import br.com.bernardorufino.android.universitario.helpers.Helper;
+import br.com.bernardorufino.android.universitario.model.attendance.Attendance;
+import br.com.bernardorufino.android.universitario.model.attendance.AttendanceProvider;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class AttendanceCardLoader extends AsyncDataLoader<List<Attendance>> impl
 
     @Override
     public List<Attendance> loadInBackground() {
+        Helper.log("Requesting new attendance list and redrawing...");
         return mAttendanceProvider.getAttendances();
     }
 
@@ -39,6 +41,7 @@ public class AttendanceCardLoader extends AsyncDataLoader<List<Attendance>> impl
     public void onChange(Observable subject) {
         // Sanity checking
         checkState(subject == mAttendanceProvider, "Observable received should be the attendance provider.");
+        Helper.log("Model change detected");
         onContentChanged();
     }
 

@@ -116,7 +116,6 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
 
     @Override
     public Loader<List<Attendance>> onCreateLoader(int loader, Bundle bundle) {
-        Helper.log("Loader created, mAdapter = " + mAdapter);
         switch (loader) {
             case ATTENDANCES_LOADER:
                 return new AttendanceCardLoader(getActivity(), checkNotNull(mAttendanceProvider));
@@ -126,13 +125,11 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
 
     @Override
     public void onLoadFinished(Loader<List<Attendance>> loader, List<Attendance> attendances) {
-        Helper.log("Loader finished loading with " + attendances);
         mAdapter.update(attendances);
     }
 
     @Override
     public void onLoaderReset(Loader<List<Attendance>> loader) {
-        Helper.log("Loader reset");
         mAdapter.update(Collections.<Attendance>emptyList());
     }
 

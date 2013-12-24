@@ -115,9 +115,9 @@
             android:layout_marginRight="5dp"
             android:layout_alignParentBottom="true"
             android:layout_toLeftOf="@+id/comp_att_card_absences_badge"
-            custom:space="4dp"
+            custom:space="3dp"
             custom:total="10"
-            custom:current="5.5" />
+            custom:current="0" />
 
         <TextView
             android:id="@id/comp_att_card_absences_badge"

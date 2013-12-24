@@ -117,7 +117,9 @@ public class AttendanceCard extends FrameLayout {
         Resources res = getContext().getResources();
         int offColor = res.getColor(R.color.absence_remaining);
         int onColor = res.getColor(getOnColorId(current, total));
-        mBar.setColors(onColor, offColor).setProgress(Math.min((float) current, total), total).draw();
+        mBar.setColors(onColor, offColor)
+            .setProgress(Math.min((float) current, total), total)
+            .draw();
     }
 
     private static int getOnColorId(double current, int total) {
@@ -129,5 +131,4 @@ public class AttendanceCard extends FrameLayout {
     private static String getAbsenceBadgeText(Attendance attendance) {
         return attendance.getAbsences() + " / " + attendance.getCourse().getAllowedAbsences();
     }
-
 }

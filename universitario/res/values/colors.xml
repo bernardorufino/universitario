@@ -4,7 +4,7 @@
     <color name="semi_transparent_white">#55FFFFFF</color>
     <color name="semi_transparent_black">#22000000</color>
     <color name="transparent">#00FFFFFF</color>
-    <color name="window_background">#CCCCCC</color>
+    <color name="window_background">#EDEDED</color>
     <color name="light_bg">#EEEEEE</color>
     <color name="orange">#F3832C</color>
     <color name="dark_orange">#D17027</color>
@@ -12,6 +12,7 @@
     <color name="grey">#DDDDDD</color>
     <color name="dark_grey">#AAAAAA</color>
     <color name="light_black">#666666</color>
+    <color name="light_title">#FFFFFF</color>
 
     <!-- Thresholds are set on Definitions -->
     <color name="absence_ok">#81C479</color>

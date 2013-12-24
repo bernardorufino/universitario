@@ -6,24 +6,18 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.LinearLayout;
 import br.com.bernardorufino.android.universitario.R;
+import br.com.bernardorufino.android.universitario.helpers.Helper;
 
 import static com.google.common.base.Preconditions.*;
 
 public class DiscreteProgressBarView extends LinearLayout {
 
-    // FIXME: If the one of the attrs is -1, it silently fails
+    /* FIXME: If one of the attrs is -1, it silently fails */
     private static final int INT_UNDEFINED = -1;
     private static final float FLOAT_UNDEFINED = -1;
     private static final int DEFAULT_SPACE = 2; // in dp
     private static final int DEFAULT_OFF_COLOR = 0xFFFF_FFFF;
     private static final int DEFAULT_ON_COLOR = 0xFF00_FF00;
-
-    private static int getDefaultSpaceInPx(Context context) {
-        return (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, DEFAULT_SPACE,
-                context.getResources().getDisplayMetrics()
-        );
-    }
 
     private int mTotal = INT_UNDEFINED;
     private float mCurrent = FLOAT_UNDEFINED;
@@ -67,19 +61,28 @@ public class DiscreteProgressBarView extends LinearLayout {
 
         int partialUnitIndex = (int) mCurrent;
         float partialUnitValue = mCurrent - ((int) mCurrent);
-        checkState(0 <= partialUnitValue && partialUnitValue <= 1);
+        if (getChildCount() != mTotal) createUnits();
         for (int i = 0; i < mTotal; i++) {
-            ProgressUnitView unit = new ProgressUnitView(getContext(), mOnColor, mOffColor);
+            ProgressUnitView unit = (ProgressUnitView) getChildAt(i);
+            unit.setOnColor(mOnColor)
+                .setProgress((i < partialUnitIndex) ? 1 : (i == partialUnitIndex) ? partialUnitValue : 0)
+                .draw();
+        }
+    }
+
+    private void createUnits() {
+        Helper.log("Creating views");
+        removeAllViews();
+        for (int i = 0; i < mTotal; i++) {
+            ProgressUnitView unit = new ProgressUnitView(getContext(), mOffColor);
             LayoutParams params = new LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
             params.setMargins((i == 0) ? 0 : mSpace, 0, 0, 0);
             unit.setLayoutParams(params);
-            unit.setProgress((i < partialUnitIndex) ? 1 : (i == partialUnitIndex) ? partialUnitValue : 0);
             addView(unit);
         }
     }
 
     public DiscreteProgressBarView setProgress(float current, int total) {
-        removeAllViews();
         setTotal(total);
         setCurrent(current);
         return this;
@@ -131,7 +134,15 @@ public class DiscreteProgressBarView extends LinearLayout {
         return mOffColor;
     }
 
+    /* FIXME: If try to set offColor after created view it won't work, fix or prohibit */
     public void setOffColor(int offColor) {
         mOffColor = offColor;
+    }
+
+    private static int getDefaultSpaceInPx(Context context) {
+        return (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, DEFAULT_SPACE,
+                context.getResources().getDisplayMetrics()
+        );
     }
 }

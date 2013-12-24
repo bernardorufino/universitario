@@ -3,6 +3,7 @@ package br.com.bernardorufino.android.universitario.model.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import br.com.bernardorufino.android.universitario.helpers.Helper;
 import br.com.bernardorufino.android.universitario.model.attendance.AttendanceTable;
 import br.com.bernardorufino.android.universitario.model.course.CourseTable;
 
@@ -49,5 +50,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static String dropQuery(String tableName) {
         return "DROP TABLE IF EXISTS " + tableName;
+    }
+
+    @Override
+    public synchronized SQLiteDatabase getWritableDatabase() {
+        Helper.log("DATABASE WRITE");
+        return super.getWritableDatabase();
+    }
+
+    @Override
+    public synchronized SQLiteDatabase getReadableDatabase() {
+        Helper.log("DATABASE READ");
+        return super.getReadableDatabase();
     }
 }
