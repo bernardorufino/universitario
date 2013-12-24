@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Navigation Menu -->
+
     <style name="NavMenuStyle">
         <item name="android:background">#2A2A2A</item>
     </style>
+
+
+    <!-- Context Menu and Dialog Header -->
 
     <style name="OrangeHeader">
         <item name="android:background">@color/orange</item>
@@ -15,6 +20,9 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
+
+    <!-- Course Edit Dialog -->
 
     <style name="CourseEditBody">
         <item name="android:layout_width">match_parent</item>
@@ -40,5 +48,94 @@
         <item name="android:layout_weight">1</item>
         <item name="android:background">@drawable/dialog_button_selector</item>
     </style>
+
+
+    <!-- Attendance Card -->
+
+    <color name="att_card_dark_text">#707070</color>
+    <color name="att_card_light_text">#8D8D8D</color>
+
+    <style name="AttendanceCardContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+    </style>
+
+    <style name="AttendanceCardUnitControl">
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textColor">@color/att_card_light_text</item>
+    </style>
+
+    <style name="AttendanceCardUnitControl.Plus">
+        <item name="android:background">@drawable/card_right</item>
+    </style>
+
+    <style name="AttendanceCardUnitControl.Minus">
+        <item name="android:background">@drawable/card_left</item>
+    </style>
+
+    <style name="AttendanceCardFractionControl">
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:background">#FCFCFC</item>
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textColor">@color/att_card_light_text</item>
+    </style>
+
+    <style name="AttendanceCardTitle">
+        <item name="android:textColor">@color/att_card_light_text</item>
+        <item name="android:layout_marginBottom">-5dp</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:gravity">bottom|center_horizontal</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">38dp</item>
+        <item name="android:background">#FFFFFF</item>
+    </style>
+
+    <style name="AttendanceCardProfessor">
+        <item name="android:textColor">@color/att_card_dark_text</item>
+        <item name="android:paddingTop">-5dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">top|center_horizontal</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">#FFFFFF</item>
+    </style>
+
+    <style name="AttendanceCardBottomBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">22dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingRight">4dp</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:background">@drawable/card_down</item>
+    </style>
+
+    <style name="AttendanceCardAbsencesBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+    </style>
+
+    <style name="AttendanceCardAbsencesBadge">
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_marginTop">-4dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
 
 </resources>

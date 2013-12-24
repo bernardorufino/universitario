@@ -65,6 +65,7 @@ public class DiscreteProgressBarView extends LinearLayout {
         for (int i = 0; i < mTotal; i++) {
             ProgressUnitView unit = (ProgressUnitView) getChildAt(i);
             unit.setOnColor(mOnColor)
+                .setOffColor(mOffColor)
                 .setProgress((i < partialUnitIndex) ? 1 : (i == partialUnitIndex) ? partialUnitValue : 0)
                 .draw();
         }
@@ -134,7 +135,6 @@ public class DiscreteProgressBarView extends LinearLayout {
         return mOffColor;
     }
 
-    /* FIXME: If try to set offColor after created view it won't work, fix or prohibit */
     public void setOffColor(int offColor) {
         mOffColor = offColor;
     }

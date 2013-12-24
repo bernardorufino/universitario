@@ -12,10 +12,15 @@ import br.com.bernardorufino.android.universitario.model.attendance.Attendance;
 import br.com.bernardorufino.android.universitario.model.course.Course;
 import com.google.common.collect.ImmutableList;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import static br.com.bernardorufino.android.universitario.application.Definitions.Domain;
 import static com.google.common.base.Preconditions.*;
 
-/* TODO: Make bar update values instead of redrawing */
+/* TODO: Make control buttons state list for pressed states */
 public class AttendanceCard extends FrameLayout {
 
     public static interface OnAttendanceUpdateListener {
@@ -128,7 +133,10 @@ public class AttendanceCard extends FrameLayout {
              : R.color.absence_overflow;
     }
 
+    private static final NumberFormat FORMATTER = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
+
     private static String getAbsenceBadgeText(Attendance attendance) {
-        return attendance.getAbsences() + " / " + attendance.getCourse().getAllowedAbsences();
+        String absences = FORMATTER.format(attendance.getAbsences());
+        return absences + " / " + attendance.getCourse().getAllowedAbsences();
     }
 }

@@ -44,6 +44,11 @@ public class ProgressUnitView extends View {
         return mOffColor;
     }
 
+    public ProgressUnitView setOffColor(int offColor) {
+        mOffColor = offColor;
+        return this;
+    }
+
     public int getOnColor() {
         return mOnColor;
     }
@@ -54,7 +59,13 @@ public class ProgressUnitView extends View {
     }
 
     public void draw() {
-        int color = ColorHelper.interpolate(mOffColor, mOnColor, mProgress);
+        double coef = progressToCoef(mProgress);
+        int color = ColorHelper.interpolate(mOffColor, mOnColor, coef);
         mBackground.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+    }
+
+    private static double progressToCoef(double t) {
+        /* http://www.timotheegroleau.com/Flash/experiments/easing_function_generator.htm */
+        return t * t;
     }
 }
