@@ -54,6 +54,12 @@
 
     <color name="att_card_dark_text">#707070</color>
     <color name="att_card_light_text">#8D8D8D</color>
+    <color name="att_card_fraction_default">#FFFFFF</color><!-- #FCFCFC -->
+    <color name="att_card_fraction_pressed">#E8E8E8</color>
+    <color name="absence_ok">#81C479</color>
+    <color name="absence_warning">#F0C64A</color>
+    <color name="absence_overflow">#E47E7E</color>
+    <color name="absence_remaining">#DDDDDD</color>
 
     <style name="AttendanceCardContainer">
         <item name="android:layout_width">match_parent</item>
@@ -74,18 +80,18 @@
     </style>
 
     <style name="AttendanceCardUnitControl.Plus">
-        <item name="android:background">@drawable/card_right</item>
+        <item name="android:background">@drawable/att_card_right_unit_selector</item>
     </style>
 
     <style name="AttendanceCardUnitControl.Minus">
-        <item name="android:background">@drawable/card_left</item>
+        <item name="android:background">@drawable/att_card_left_unit_selector</item>
     </style>
 
     <style name="AttendanceCardFractionControl">
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:background">#FCFCFC</item>
+        <item name="android:background">@drawable/att_card_fraction_selector</item>
         <item name="android:layout_width">40dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:textColor">@color/att_card_light_text</item>
@@ -131,6 +137,7 @@
     </style>
 
     <style name="AttendanceCardAbsencesBadge">
+        <!-- item name="android:textColor">#4285F4</item -->
         <item name="android:textSize">12sp</item>
         <item name="android:layout_marginTop">-4dp</item>
         <item name="android:layout_width">wrap_content</item>

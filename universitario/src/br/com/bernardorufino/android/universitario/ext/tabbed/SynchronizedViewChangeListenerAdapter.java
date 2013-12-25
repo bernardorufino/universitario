@@ -15,13 +15,13 @@ public class SynchronizedViewChangeListenerAdapter implements ViewPager.OnPageCh
     }
 
     @Override
-    public void onPageSelected(int i) {
-        mActionBar.setSelectedNavigationItem(i);
+    public void onPageSelected(int position) {
+        mActionBar.setSelectedNavigationItem(position);
     }
 
     @Override
-    public void onPageScrolled(int i, float v, int j) { /* Override */ }
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { /* Override */ }
 
     @Override
-    public void onPageScrollStateChanged(int i) { /* Override */ }
+    public void onPageScrollStateChanged(int state) { /* Override */ }
 }

@@ -27,7 +27,13 @@ public class AttendanceCardAdapter extends BaseAdapter {
     }
 
     public void update(List<Attendance> attendances) {
-        mAttendances = checkNotNull(attendances);
+        // Don't update view if nothing to update, this happens when the UI elements
+        // that triggered the update have itself updated the appropriated models
+        if (mAttendances.equals(attendances)) {
+            Helper.log("Not redrawing, it's equal");
+            return;
+        }
+        mAttendances = attendances;
         notifyDataSetChanged();
     }
 

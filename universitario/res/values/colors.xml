@@ -13,10 +13,4 @@
     <color name="light_black">#666666</color>
     <color name="light_title">#FFFFFF</color>
 
-    <!-- Thresholds are set on Definitions -->
-    <color name="absence_ok">#81C479</color>
-    <color name="absence_warning">#E7CC63</color>
-    <color name="absence_overflow">#E47E7E</color>
-    <color name="absence_remaining">#DDDDDD</color>
-
 </resources>

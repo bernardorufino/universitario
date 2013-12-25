@@ -55,19 +55,25 @@ public class Attendance extends AbstractModel {
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (!(object instanceof Course)) return false;
-        Attendance that = (Attendance) object;
-        /* TODO: Allow comparison of new records */
-        return !isNewRecord() && !that.isNewRecord() && getId() == that.getId();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Attendance)) return false;
+
+        Attendance that = (Attendance) o;
+
+        if (Double.compare(that.mAbsences, mAbsences) != 0) return false;
+        if (!mCourse.equals(that.mCourse)) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        /* TODO: Produce proper hashCode for new records */
-        int result = (isNewRecord() ? 1 : 0);
-        result = 31 * result + getId();
+        int result;
+        long temp;
+        result = mCourse.hashCode();
+        temp = Double.doubleToLongBits(mAbsences);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 }

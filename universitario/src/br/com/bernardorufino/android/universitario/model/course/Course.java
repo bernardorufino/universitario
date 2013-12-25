@@ -71,19 +71,24 @@ public class Course extends AbstractModel {
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (!(object instanceof Course)) return false;
-        Course that = (Course) object;
-        /* TODO: Allow comparison of new records */
-        return !isNewRecord() && !that.isNewRecord() && getId() == that.getId();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Course)) return false;
+
+        Course course = (Course) o;
+
+        if (mAllowedAbsences != course.mAllowedAbsences) return false;
+        if (!mProfessor.equals(course.mProfessor)) return false;
+        if (!mTitle.equals(course.mTitle)) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        /* TODO: Produce proper hashCode for new records */
-        int result = (isNewRecord() ? 1 : 0);
-        result = 31 * result + getId();
+        int result = mTitle.hashCode();
+        result = 31 * result + mProfessor.hashCode();
+        result = 31 * result + mAllowedAbsences;
         return result;
     }
 }

@@ -92,10 +92,10 @@ public class MainActivity extends RoboFragmentActivity {
         * */
     private class MainViewChangeListener extends SynchronizedViewChangeListenerAdapter {
         @Override
-        public void onPageSelected(int i) {
-            super.onPageSelected(i);
+        public void onPageSelected(int position) {
+            super.onPageSelected(position);
             mNavMenu.setTouchModeAbove(
-                    (i == 0)
+                    (position == 0)
                     ? SlidingMenu.TOUCHMODE_FULLSCREEN
                     : SlidingMenu.TOUCHMODE_NONE
             );
