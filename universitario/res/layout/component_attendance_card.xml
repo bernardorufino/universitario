@@ -62,7 +62,7 @@
             android:layout_alignParentBottom="true"
             android:layout_toLeftOf="@+id/comp_att_card_absences_badge"
             custom:space="3dp"
-            custom:total="10"
+            custom:total="1"
             custom:current="0"
             style="@style/AttendanceCardAbsencesBar" />
 

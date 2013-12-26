@@ -13,4 +13,7 @@
     <color name="light_black">#666666</color>
     <color name="light_title">#FFFFFF</color>
 
+    <!-- Dynamically modified with transformations on this color, which needs to be white -->
+    <color name="to_be_changed_programmatically">#FFFFFF</color>
+
 </resources>

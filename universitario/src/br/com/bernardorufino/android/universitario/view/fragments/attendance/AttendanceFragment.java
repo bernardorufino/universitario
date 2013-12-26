@@ -16,6 +16,7 @@ import br.com.bernardorufino.android.universitario.model.attendance.Attendance;
 import br.com.bernardorufino.android.universitario.model.attendance.AttendanceManager;
 import br.com.bernardorufino.android.universitario.model.attendance.AttendanceProvider;
 import br.com.bernardorufino.android.universitario.model.course.Course;
+import br.com.bernardorufino.android.universitario.view.components.TotalAbsencesBar;
 import br.com.bernardorufino.android.universitario.view.fragments.CourseEditFragment;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
@@ -30,6 +31,7 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
     private static final int ATTENDANCES_LOADER = 0;
 
     @InjectView(R.id.cards_list) private ListView mCardsList;
+    @InjectView(R.id.total_absences_bar) private TotalAbsencesBar mTotalAbsencesBar;
 
     private AttendanceCardAdapter mAdapter;
     private AttendanceProvider mAttendanceProvider;
@@ -49,7 +51,7 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.attendance_action_new:
+            case R.id.action_new_attendance:
                 CourseEditFragment.show(new Course(), getFragmentManager());
                 return true;
         }
@@ -59,6 +61,14 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_attendance, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mTotalAbsencesBar.setTotal(40)
+                         .setCurrent(38.5)
+                         .draw();
     }
 
     @Override
@@ -86,6 +96,18 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
         return mContextHeader;
     }
 
+    private void updateTotalAbsences(List<Attendance> attendances) {
+        double totalAbsences = 0;
+        int totalAllowedAbsences = 0;
+        for (Attendance attendance : attendances) {
+            totalAbsences += attendance.getAbsences();
+            totalAllowedAbsences += attendance.getCourse().getAllowedAbsences();
+        }
+        mTotalAbsencesBar.setTotal(totalAllowedAbsences)
+                .setCurrent(totalAbsences)
+                .draw();
+    }
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, view, menuInfo);
@@ -93,7 +115,7 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
         Attendance attendance = mAdapter.getItem(info.position);
         Course course = attendance.getCourse();
         View header = getContextHeader(course.getTitle());
-        /* TODO: Get rid of the blue line below the header */
+        /* TODO: Get rid of the blue line below the header (paint it dark-orange) */
         menu.setHeaderView(header);
         getActivity().getMenuInflater().inflate(R.menu.context_component_attendance_card, menu);
     }
@@ -126,6 +148,7 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
     @Override
     public void onLoadFinished(Loader<List<Attendance>> loader, List<Attendance> attendances) {
         mAdapter.update(attendances);
+        updateTotalAbsences(attendances);
     }
 
     @Override

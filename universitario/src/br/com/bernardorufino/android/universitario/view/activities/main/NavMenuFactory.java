@@ -1,4 +1,4 @@
-package br.com.bernardorufino.android.universitario.view.activities.common;
+package br.com.bernardorufino.android.universitario.view.activities.main;
 
 import android.support.v4.app.FragmentActivity;
 import br.com.bernardorufino.android.universitario.R;

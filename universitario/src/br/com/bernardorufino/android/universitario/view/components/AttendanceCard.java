@@ -12,12 +12,6 @@ import br.com.bernardorufino.android.universitario.model.attendance.Attendance;
 import br.com.bernardorufino.android.universitario.model.course.Course;
 import com.google.common.collect.ImmutableList;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
-import java.util.Locale;
-
-import static br.com.bernardorufino.android.universitario.application.Definitions.Domain;
 import static com.google.common.base.Preconditions.*;
 
 /* TODO: Make control buttons state list for pressed states */
@@ -55,10 +49,6 @@ public class AttendanceCard extends FrameLayout {
     public AttendanceCard(Context context) {
         super(context);
         inflate(context, R.layout.component_attendance_card, this);
-        initializeView();
-    }
-
-    private void initializeView() {
         mCourseTitle = (TextView) findViewById(R.id.comp_att_card_course_title);
         mCourseProfessor = (TextView) findViewById(R.id.comp_att_card_course_prof);
         mAbsencesBadge = (TextView) findViewById(R.id.comp_att_card_absences_badge);
@@ -121,22 +111,16 @@ public class AttendanceCard extends FrameLayout {
         int total = mAttendance.getCourse().getAllowedAbsences();
         Resources res = getContext().getResources();
         int offColor = res.getColor(R.color.absence_remaining);
-        int onColor = res.getColor(getOnColorId(current, total));
+        int onColorId = AbsencesBarHelper.getColorResourceId(current, total);
+        int onColor = res.getColor(onColorId);
         mBar.setColors(onColor, offColor)
             .setProgress(Math.min((float) current, total), total)
             .draw();
     }
 
-    private static int getOnColorId(double current, int total) {
-        return (current < total * Domain.ABSENCE_WARNING_THRESHOLD) ? R.color.absence_ok
-             : (current < total) ? R.color.absence_warning
-             : R.color.absence_overflow;
-    }
-
-    private static final NumberFormat FORMATTER = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
-
     private static String getAbsenceBadgeText(Attendance attendance) {
-        String absences = FORMATTER.format(attendance.getAbsences());
-        return absences + " / " + attendance.getCourse().getAllowedAbsences();
+        double current = attendance.getAbsences();
+        int total = attendance.getCourse().getAllowedAbsences();
+        return AbsencesBarHelper.getStatusText(current, total);
     }
 }

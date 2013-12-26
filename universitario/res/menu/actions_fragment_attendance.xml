@@ -3,10 +3,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/attendance_action_new"
-        android:showAsAction="always|withText"
+        android:id="@+id/action_new_attendance"
+        android:showAsAction="always"
         android:title="Nova matéria"
         android:icon="@drawable/ic_action_new"
+        android:visible="true" />
+
+    <item
+        android:id="@+id/action_attendance_settings"
+        android:showAsAction="always"
+        android:title="Configurações"
+        android:icon="@drawable/ic_action_cog"
         android:visible="true" />
 
 </menu>

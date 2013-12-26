@@ -20,7 +20,6 @@ import br.com.bernardorufino.android.universitario.helpers.AnimationHelper;
 import br.com.bernardorufino.android.universitario.helpers.Helper;
 import br.com.bernardorufino.android.universitario.helpers.ViewHelper;
 import br.com.bernardorufino.android.universitario.model.ModelManagers;
-import br.com.bernardorufino.android.universitario.model.attendance.Attendance;
 import br.com.bernardorufino.android.universitario.model.course.Course;
 import br.com.bernardorufino.android.universitario.model.course.CourseManager;
 import com.google.common.collect.ImmutableList;
@@ -58,7 +57,19 @@ public class CourseEditFragment extends RoboDialogFragment {
     private RotateDrawable mSpinner;
 
     public CourseEditFragment(Course course) {
-        mCourse = course;
+        // Cloning it because I only want to modify external state through database notifications (which are already
+        // automatic and require no extra code from here). This is important when some field is modified and valid,
+        // but then another field is modified and invalid, I won't save the changes in the database but the original
+        // object will be modified in the first field, thus leaving the object and the database out of sync,
+        // which is not desirable. Note the difference between this approach and the approach taken when the user
+        // hits the + button in an attendance card, the card will modify the original object and further issue a
+        // redundant notification through database mechanisms (which will be ignored in the adapter), the difference
+        // is that the view (AttendanceCard) is the one responsible for altering the view state of the object (through
+        // increasing the current progress of the discrete bar and modifying the attendance badge), whereas this
+        // object (CourseEditFragment) is NOT responsible for the visual representation of a Course (which is
+        // indirectly the AttendanceCourse view), and do require visual modifications, but through the somewhat
+        // "official" mechanism of notifications from the database.
+        mCourse = course.clone();
     }
 
     @Override

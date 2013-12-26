@@ -4,6 +4,7 @@
 
     <item
         android:id="@+id/ctx_menu_comp_att_card_edit"
+        android:icon="@drawable/ic_action_cancel"
         android:title="Editar" />
 
     <item

@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import br.com.bernardorufino.android.universitario.R;
 import br.com.bernardorufino.android.universitario.ext.tabbed.SynchronizedTabListenerAdapter;
 import br.com.bernardorufino.android.universitario.ext.tabbed.SynchronizedViewChangeListenerAdapter;
-import br.com.bernardorufino.android.universitario.view.activities.common.NavMenuFactory;
 import br.com.bernardorufino.android.universitario.view.fragments.attendance.AttendanceFragment;
 import br.com.bernardorufino.android.universitario.view.fragments.CalendarFragment;
 import br.com.bernardorufino.android.universitario.view.fragments.ReportFragment;
@@ -37,7 +36,6 @@ public class MainActivity extends RoboFragmentActivity {
 
     private void initializeView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
-
     }
 
     private void initializeTabs() {
@@ -88,8 +86,8 @@ public class MainActivity extends RoboFragmentActivity {
     }
 
     /*
-        * Listener intended to avoid conflicts between ViewPager and SlidingMenu when a swipe gesture is performed
-        * */
+    * Listener intended to avoid conflicts between ViewPager and SlidingMenu when a swipe gesture is performed
+    * */
     private class MainViewChangeListener extends SynchronizedViewChangeListenerAdapter {
         @Override
         public void onPageSelected(int position) {

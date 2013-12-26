@@ -22,7 +22,7 @@ public class ProgressUnitView extends View {
         super(context);
         mOffColor = offColor;
         mOnColor = mOffColor; // It simply doesn't "work" until the user set the color
-        mBackground = getContext().getResources().getDrawable(R.drawable.progress_unit_on);
+        mBackground = getContext().getResources().getDrawable(R.drawable.progress_unit);
         setBackgroundDrawable(mBackground);
         checkState(mBackground == getBackground());
         setProgress(DEFAULT_PROGRESS);
