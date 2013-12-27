@@ -9,7 +9,7 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-public class AbsencesBarHelper {
+public final class AbsencesBarHelper {
 
     public static int getColorResourceId(double current, int total) {
         return (current < total * Definitions.Domain.ABSENCE_WARNING_THRESHOLD) ? R.color.absence_ok

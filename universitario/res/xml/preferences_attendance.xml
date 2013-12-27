@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <br.com.bernardorufino.android.universitario.view.components.EditDecimalPreference
+        android:key="attendance_total_absences_multiplier"
+        android:title="Multiplicador do limite total"
+        android:summary="limite = ? * soma de faltas"
+        android:defaultValue="0.66666667" />
+
+</PreferenceScreen>

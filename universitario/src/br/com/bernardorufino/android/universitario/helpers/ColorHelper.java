@@ -4,7 +4,7 @@ import android.graphics.Color;
 
 import static com.google.common.base.Preconditions.*;
 
-public class ColorHelper {
+public final class ColorHelper {
 
     // Have a better name? Let me know!
     public static int interpolate(int colorA, int colorB, double coef) {

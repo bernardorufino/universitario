@@ -4,9 +4,8 @@ package br.com.bernardorufino.android.universitario.view.activities.main;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import br.com.bernardorufino.android.universitario.application.Facets;
 import com.google.common.base.Throwables;
-
-import static br.com.bernardorufino.android.universitario.view.activities.main.MainActivity.TAB_FRAGMENTS;
 
 public class MainPagerAdapter extends FragmentPagerAdapter {
 
@@ -17,7 +16,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int i) {
         try {
-            return TAB_FRAGMENTS.get(i).newInstance();
+            return Facets.FRAGMENTS.get(i).newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
             throw Throwables.propagate(e);
         }
@@ -25,6 +24,6 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return TAB_FRAGMENTS.size();
+        return Facets.FRAGMENTS.size();
     }
 }

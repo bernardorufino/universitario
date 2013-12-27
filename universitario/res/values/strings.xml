@@ -6,4 +6,8 @@
     <string name="generic_error">Ocorreu um erro</string>
     <string name="to_be_changed_programmatically"></string>
 
+    <string name="attendance_label">Faltas</string>
+    <string name="calendar_label">Trabalhos</string>
+    <string name="report_label">Notas</string>
+
 </resources>

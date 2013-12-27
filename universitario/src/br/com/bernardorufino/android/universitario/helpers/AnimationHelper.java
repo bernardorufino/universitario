@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.view.animation.LinearInterpolator;
 
-public class AnimationHelper {
+public final class AnimationHelper {
 
     public static ViewPropertyAnimator fadeIn(final View view, long duration) {
         return fade(view, 0, 1, View.INVISIBLE, View.VISIBLE, duration);

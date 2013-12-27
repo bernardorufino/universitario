@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 
-public class IOUtils {
+public final class IOUtils {
 
     public static String toString(final InputStream inputStream, Charset charset) throws IOException {
         InputSupplier<? extends InputStream> supplier = new InputSupplier<InputStream>() {

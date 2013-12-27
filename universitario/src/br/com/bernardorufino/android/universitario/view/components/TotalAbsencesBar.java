@@ -54,7 +54,7 @@ public class TotalAbsencesBar extends FrameLayout {
     }
 
     public synchronized TotalAbsencesBar setTotal(int total) {
-        checkArgument(total > 0, "total must be > 0");
+        checkArgument(total >= 0, "total must be >= 0");
         mTotal = total;
         return this;
     }

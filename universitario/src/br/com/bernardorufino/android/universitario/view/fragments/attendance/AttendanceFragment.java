@@ -1,7 +1,10 @@
 package br.com.bernardorufino.android.universitario.view.fragments.attendance;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.*;
@@ -9,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import br.com.bernardorufino.android.universitario.R;
+import br.com.bernardorufino.android.universitario.application.Definitions;
+import br.com.bernardorufino.android.universitario.application.Facets;
 import br.com.bernardorufino.android.universitario.helpers.Helper;
 import br.com.bernardorufino.android.universitario.helpers.ViewHelper;
 import br.com.bernardorufino.android.universitario.model.ModelManagers;
@@ -16,6 +21,7 @@ import br.com.bernardorufino.android.universitario.model.attendance.Attendance;
 import br.com.bernardorufino.android.universitario.model.attendance.AttendanceManager;
 import br.com.bernardorufino.android.universitario.model.attendance.AttendanceProvider;
 import br.com.bernardorufino.android.universitario.model.course.Course;
+import br.com.bernardorufino.android.universitario.view.activities.SettingsActivity;
 import br.com.bernardorufino.android.universitario.view.components.TotalAbsencesBar;
 import br.com.bernardorufino.android.universitario.view.fragments.CourseEditFragment;
 import roboguice.fragment.RoboFragment;
@@ -35,6 +41,7 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
 
     private AttendanceCardAdapter mAdapter;
     private AttendanceProvider mAttendanceProvider;
+    private SharedPreferences mPrefs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +60,11 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
         switch (item.getItemId()) {
             case R.id.action_new_attendance:
                 CourseEditFragment.show(new Course(), getFragmentManager());
+                return true;
+            case R.id.action_attendance_settings:
+                int id = Facets.getPreferencesResourceId(Facets.ATTENDANCE);
+                Intent intent = SettingsActivity.getIntentForPreferences(getActivity(), id);
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -82,12 +94,13 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
         mCardsList.setAdapter(mAdapter);
         registerForContextMenu(mCardsList);
         getLoaderManager().initLoader(ATTENDANCES_LOADER, null, this);
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
     }
 
     private TextView mContextHeader;
 
     private TextView getContextHeader(String title) {
-        if (mContextHeader == null || !ViewHelper.makeOrphan(mContextHeader)) {
+        if (mContextHeader == null || !ViewHelper.tryMakeOrphan(mContextHeader)) {
             Helper.log("Inflating view for context menu of attendances");
             mContextHeader = (TextView) LayoutInflater.from(getActivity())
                     .inflate(R.layout.component_context_menu_header_attendance, null);
@@ -103,6 +116,9 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
             totalAbsences += attendance.getAbsences();
             totalAllowedAbsences += attendance.getCourse().getAllowedAbsences();
         }
+        float multiplier = mPrefs.getFloat(Definitions.Preferences.Attendance.TOTAL_ABSENCES_MULTIPLIER, Float.NaN);
+        checkState(multiplier != Float.NaN, "Preference multiplier doesn't exist.");
+        totalAllowedAbsences = (int) (multiplier * totalAllowedAbsences);
         mTotalAbsencesBar.setTotal(totalAllowedAbsences)
                 .setCurrent(totalAbsences)
                 .draw();

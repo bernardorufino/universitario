@@ -17,9 +17,10 @@
 
         <activity
             android:name=".view.activities.main.MainActivity"
+            android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name">
+            android:theme="@style/ApplicationTheme.Main">
             <!-- android:uiOptions="splitActionBarWhenNarrow" -->
 
             <intent-filter>
@@ -31,7 +32,13 @@
 
         <activity
             android:name=".view.activities.SettingsActivity"
-            android:label="Configurações" />
+            android:label="Configurações">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.com.bernardorufino.android.universitario.view.activities.main.MainActivity" />
+
+        </activity>
 
     </application>
 

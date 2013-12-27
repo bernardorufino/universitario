@@ -1,6 +1,6 @@
 package br.com.bernardorufino.android.universitario.helpers;
 
-public class TableHelper {
+public final class TableHelper {
     
     public static String columnInQuery(String table, String column) {
         return table + "." + column + " as " + columnAlias(table, column);

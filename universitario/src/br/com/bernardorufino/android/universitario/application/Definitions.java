@@ -1,7 +1,7 @@
 package br.com.bernardorufino.android.universitario.application;
 
 /* TODO: <FEATURE> Make most alarming absences up in the list  */
-public class Definitions {
+public final class Definitions {
 
     public static final String APP_NAME = "Universitário";
     public static final String SAFE_APP_NAME = "Universitario";
@@ -18,5 +18,28 @@ public class Definitions {
 
         public static final String PREFERENCES = "globalPreferences";
         public static final String USERNAME = "userName";
+    }
+
+    /* Change here, change in xml/preferences_<facet> */
+    public static class Preferences {
+
+        public static class Attendance {
+
+            public static final String TOTAL_ABSENCES_MULTIPLIER = "attendance_total_absences_multiplier";
+        }
+
+        public static class Calendar {
+            /* Empty */
+        }
+
+        public static class Report {
+            /* Empty */
+        }
+
+    }
+
+    // Prevents instantiation
+    private Definitions() {
+        throw new AssertionError("Cannot instantiate object from " + this.getClass());
     }
 }
