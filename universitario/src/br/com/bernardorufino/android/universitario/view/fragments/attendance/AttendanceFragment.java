@@ -62,8 +62,8 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
                 CourseEditFragment.show(new Course(), getFragmentManager());
                 return true;
             case R.id.action_attendance_settings:
-                int id = Facets.getPreferencesResourceId(Facets.ATTENDANCE);
-                Intent intent = SettingsActivity.getIntentForPreferences(getActivity(), id);
+                String attendance = Facets.getString(Facets.ATTENDANCE);
+                Intent intent = SettingsActivity.getIntentForPreferences(getActivity(), attendance);
                 startActivity(intent);
                 return true;
         }

@@ -14,13 +14,13 @@ import java.util.List;
 
 public class SettingsActivity extends PreferenceActivity {
 
-    public static final String PREFERENCES_RESOURCE_ID = "preferencesResourceId";
+    public static final String PREFERENCES_PARAM = "preferences";
 
-    public static Intent getIntentForPreferences(Context packageContext, int preferencesResourceId) {
+    public static Intent getIntentForPreferences(Context packageContext, String facet) {
         Intent intent = new Intent(packageContext, SettingsActivity.class);
         intent.putExtra(EXTRA_SHOW_FRAGMENT, SettingsFragment.class.getName());
         Bundle bundle = new Bundle();
-        bundle.putInt(PREFERENCES_RESOURCE_ID, preferencesResourceId);
+        bundle.putString(PREFERENCES_PARAM, facet);
         intent.putExtra(EXTRA_SHOW_FRAGMENT_ARGUMENTS, bundle);
         return intent;
     }

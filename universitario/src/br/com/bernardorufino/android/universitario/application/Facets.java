@@ -9,11 +9,19 @@ import com.google.common.collect.ImmutableList;
 
 import java.util.List;
 
+import static com.google.common.base.Preconditions.*;
+
 public final class Facets {
 
     public static int ATTENDANCE = 0;
     public static int CALENDAR = 1;
     public static int REPORT = 2;
+
+    public static final List<String> STRINGS = ImmutableList.of(
+            "attendance",
+            "calendar",
+            "report"
+    );
 
     /* Change here, change in strings */
     public static final List<String> LABELS = ImmutableList.of(
@@ -33,6 +41,14 @@ public final class Facets {
             R.xml.preferences_calendar,
             R.xml.preferences_report
     );
+
+    public static int fromString(String string) {
+        return STRINGS.indexOf(checkNotNull(string).trim().toLowerCase());
+    }
+
+    public static String getString(int facet) {
+        return STRINGS.get(facet);
+    }
 
     public static Class<? extends Fragment> getFragment(int facet) {
         return FRAGMENTS.get(facet);

@@ -31,7 +31,7 @@
 
         <extra
             android:name="preferences"
-            android:value="grades" />
+            android:value="report" />
 
     </header>
 
