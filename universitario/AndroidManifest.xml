@@ -19,6 +19,7 @@
             android:name=".view.activities.main.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/ApplicationTheme.Main">
             <!-- android:uiOptions="splitActionBarWhenNarrow" -->

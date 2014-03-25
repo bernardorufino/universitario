@@ -6,10 +6,7 @@ import android.graphics.drawable.RotateDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
+import android.view.*;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,6 +33,8 @@ public class CourseEditFragment extends RoboDialogFragment {
     private static final String EDIT_COURSE_OK_BUTTON = "Salvar";
     private static final int DEFAULT_ALLOWED_ABSENCES = 8;
     private static final String DEFAULT_TAG = "course_edit";
+    public static final int MAX_ABSENCES_ALLOWED_PER_COURSE = 100;
+    public static final int MIN_ABSENCES_ALLOWED_PER_COURSE = 1;
 
     public static CourseEditFragment show(Course course, FragmentManager manager) {
         CourseEditFragment fragment = new CourseEditFragment(course);
@@ -56,7 +55,7 @@ public class CourseEditFragment extends RoboDialogFragment {
     private ObjectAnimator mLoadingAnimator;
     private RotateDrawable mSpinner;
 
-    public CourseEditFragment(Course course) {
+    private CourseEditFragment(Course course) {
         // Cloning it because I only want to modify external state through database notifications (which are already
         // automatic and require no extra code from here). This is important when some field is modified and valid,
         // but then another field is modified and invalid, I won't save the changes in the database but the original
@@ -88,9 +87,16 @@ public class CourseEditFragment extends RoboDialogFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Show the keyboard immediately
+        mCourseTitle.requestFocus();
+
+        // For enabling/disabling them while waiting for database
         mUiViews = ImmutableList.of(mCancelButton, mCourseTitle, mCourseProfessor, mCourseAllowedAbsences);
-        mCourseAllowedAbsences.setMaxValue(100);
-        mCourseAllowedAbsences.setMinValue(1);
+
+        mCourseAllowedAbsences.setMaxValue(MAX_ABSENCES_ALLOWED_PER_COURSE);
+        mCourseAllowedAbsences.setMinValue(MIN_ABSENCES_ALLOWED_PER_COURSE);
+
         if (mCourse.isNewRecord()) {
             mTitle.setText(NEW_COURSE_TITLE);
             mOkButton.setText(NEW_COURSE_OK_BUTTON);
@@ -110,6 +116,7 @@ public class CourseEditFragment extends RoboDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         dialog.setCanceledOnTouchOutside(false);
         return dialog;
     }
@@ -144,8 +151,12 @@ public class CourseEditFragment extends RoboDialogFragment {
             // Starts loading animation
             mOkButton.setCompoundDrawablesWithIntrinsicBounds(mSpinner, null, null, null);
             mLoadingAnimator.start();
+
             // Disable UI
             for (View view : mUiViews) view.setEnabled(false);
+
+            // Dismiss keyboard
+            getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         }
 
         @Override
@@ -163,6 +174,7 @@ public class CourseEditFragment extends RoboDialogFragment {
             // Clears loading animation
             mLoadingAnimator.end();
             mOkButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_accept, 0, 0, 0);
+
             // Re-enable views
             for (View view : mUiViews) view.setEnabled(true);
             if (e == null) {
