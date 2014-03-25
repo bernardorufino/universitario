@@ -1,5 +1,7 @@
 package br.com.bernardorufino.android.universitario.application;
 
+import com.facebook.rebound.SpringConfig;
+
 /* TODO: <FEATURE> Make most alarming absences up in the list  */
 public final class Definitions {
 
@@ -8,6 +10,8 @@ public final class Definitions {
     public static final String APP_ID = Application.class.getName();
     public static final String NAMESPACE = Application.class.getPackage().getName();
     public static final String LOG_TAG = SAFE_APP_NAME.toUpperCase();
+
+    public static final SpringConfig SPRING_CONFIG = SpringConfig.fromOrigamiTensionAndFriction(45, 4);
 
     public static class Domain {
 

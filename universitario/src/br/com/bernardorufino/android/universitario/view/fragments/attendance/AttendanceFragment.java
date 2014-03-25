@@ -14,6 +14,7 @@ import android.widget.TextView;
 import br.com.bernardorufino.android.universitario.R;
 import br.com.bernardorufino.android.universitario.application.Definitions;
 import br.com.bernardorufino.android.universitario.application.Facets;
+import br.com.bernardorufino.android.universitario.ext.loader.ComposedDynamicView;
 import br.com.bernardorufino.android.universitario.helpers.CustomHelper;
 import br.com.bernardorufino.android.universitario.helpers.CustomViewHelper;
 import br.com.bernardorufino.android.universitario.model.ModelManagers;
@@ -22,6 +23,7 @@ import br.com.bernardorufino.android.universitario.model.attendance.AttendanceMa
 import br.com.bernardorufino.android.universitario.model.attendance.AttendanceProvider;
 import br.com.bernardorufino.android.universitario.model.course.Course;
 import br.com.bernardorufino.android.universitario.view.activities.SettingsActivity;
+import br.com.bernardorufino.android.universitario.view.components.AttendanceCard;
 import br.com.bernardorufino.android.universitario.view.components.TotalAbsencesBar;
 import br.com.bernardorufino.android.universitario.view.fragments.CourseEditFragment;
 import roboguice.fragment.RoboFragment;
@@ -32,7 +34,8 @@ import java.util.List;
 
 import static com.google.common.base.Preconditions.*;
 
-public class AttendanceFragment extends RoboFragment implements LoaderManager.LoaderCallbacks<List<Attendance>> {
+public class AttendanceFragment extends RoboFragment implements
+        LoaderManager.LoaderCallbacks<List<Attendance>> {
 
     private static final int ATTENDANCES_LOADER = 0;
 
@@ -42,6 +45,7 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
     private AttendanceCardAdapter mAdapter;
     private AttendanceProvider mAttendanceProvider;
     private SharedPreferences mPrefs;
+    private ComposedDynamicView<AttendanceSubView> mComposedView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,9 +82,10 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mTotalAbsencesBar.setTotal(40)
-                         .setCurrent(38.5)
-                         .draw();
+        mTotalAbsencesBar
+                .setTotal(40)
+                .setCurrent(38.5)
+                .draw();
     }
 
     @Override
@@ -90,7 +95,8 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
         /* TODO: Analyse life cycle to prevent leaks from spurious attendance providers created here */
         AttendanceManager attendanceManager = ModelManagers.get(getActivity(), AttendanceManager.class);
         mAttendanceProvider = attendanceManager.getAttendanceProvider();
-        mAdapter = new AttendanceCardAdapter(getActivity());
+        mComposedView = new ComposedDynamicView<>();
+        mAdapter = new AttendanceCardAdapter(getActivity(), mCardsList, mComposedView);
         mCardsList.setAdapter(mAdapter);
         registerForContextMenu(mCardsList);
         getLoaderManager().initLoader(ATTENDANCES_LOADER, null, this);
@@ -102,10 +108,11 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
     private TextView getContextHeader(String title) {
         if (mContextHeader == null || !CustomViewHelper.tryMakeOrphan(mContextHeader)) {
             CustomHelper.log("Inflating view for context menu of attendances");
-            mContextHeader = (TextView) LayoutInflater.from(getActivity())
+            mContextHeader = (TextView) LayoutInflater
+                    .from(getActivity())
                     .inflate(R.layout.component_context_menu_header_attendance, null);
         }
-        mContextHeader.setText(title);
+        checkNotNull(mContextHeader).setText(title);
         return mContextHeader;
     }
 
@@ -119,7 +126,8 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
         float multiplier = mPrefs.getFloat(Definitions.Preferences.Attendance.TOTAL_ABSENCES_MULTIPLIER, Float.NaN);
         checkState(multiplier != Float.NaN, "Preference multiplier doesn't exist.");
         totalAllowedAbsences = (int) (multiplier * totalAllowedAbsences);
-        mTotalAbsencesBar.setTotal(totalAllowedAbsences)
+        mTotalAbsencesBar
+                .setTotal(totalAllowedAbsences)
                 .setCurrent(totalAbsences)
                 .draw();
     }
@@ -139,7 +147,8 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        Attendance attendance = mAdapter.getItem(info.position);
+        AttendanceCard card = (AttendanceCard) info.targetView;
+        Attendance attendance = mAdapter.getItem(checkNotNull(info).position);
         Course course = attendance.getCourse();
         switch (item.getItemId()) {
             case R.id.ctx_menu_comp_att_card_edit:
@@ -158,13 +167,16 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
             case ATTENDANCES_LOADER:
                 return new AttendanceCardLoader(getActivity(), checkNotNull(mAttendanceProvider));
         }
-        throw new IllegalStateException("Trying to create an unknown loader.");
+        throw new AssertionError("Unknown loader code " + loader);
     }
 
     @Override
     public void onLoadFinished(Loader<List<Attendance>> loader, List<Attendance> attendances) {
-        mAdapter.update(attendances);
-        updateTotalAbsences(attendances);
+        /* TODO: Beware of some updates that may cause the listener not to be called,
+           TODO: an thus cancelling future subview updates */
+        if (mComposedView.shouldUpdateSubView(AttendanceSubView.CARDS)) mAdapter.update(attendances);
+        if (mComposedView.shouldUpdateSubView(AttendanceSubView.COUNTER)) updateTotalAbsences(attendances);
+        mComposedView.reset();
     }
 
     @Override
