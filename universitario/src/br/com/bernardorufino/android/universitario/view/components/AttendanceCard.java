@@ -89,6 +89,7 @@ public class AttendanceCard extends FrameLayout {
 
     public void setAttendance(Attendance attendance) {
         mAttendance = checkNotNull(attendance);
+        setupAbsenceBadgeWidth();
         updateView();
     }
 
@@ -102,6 +103,21 @@ public class AttendanceCard extends FrameLayout {
         mCourseProfessor.setText(course.getProfessor());
         mAbsencesBadge.setText(getAbsenceBadgeText(mAttendance));
         updateBar();
+    }
+
+    private void setupAbsenceBadgeWidth() {
+        int total = mAttendance.getCourse().getAllowedAbsences();
+        double current = total + PLUS_FRACTION_ABSENCE;
+        CharSequence savedText = mAbsencesBadge.getText();
+        String dummyText = AbsencesBarHelper.getStatusText(current, total);
+        mAbsencesBadge.setText(dummyText);
+        int widthSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+        int heightSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED); // Don't care
+        mAbsencesBadge.measure(widthSpec, heightSpec);
+        int width = mAbsencesBadge.getMeasuredWidth();
+        mAbsencesBadge.setText(savedText);
+        mAbsencesBadge.setMinimumWidth(width);
+        mAbsencesBadge.requestLayout();
     }
 
     private void updateBar() {
