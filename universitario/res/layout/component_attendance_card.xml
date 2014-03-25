@@ -20,10 +20,10 @@
             style="@style/AttendanceCardUnitControl.Minus" />
 
         <Button
-            android:text="-.5"
+            android:text="-A"
             android:id="@+id/comp_att_card_minus_fraction"
             android:layout_toRightOf="@id/comp_att_card_minus_one"
-            style="@style/AttendanceCardFractionControl" />
+            style="@style/AttendanceCardFractionControl.Minus" />
 
         <Button
             android:text="+"
@@ -32,10 +32,10 @@
             style="@style/AttendanceCardUnitControl.Plus" />
 
         <Button
-            android:text="+.5"
+            android:text="+A"
             android:id="@+id/comp_att_card_plus_fraction"
             android:layout_toLeftOf="@id/comp_att_card_plus_one"
-            style="@style/AttendanceCardFractionControl" />
+            style="@style/AttendanceCardFractionControl.Plus" />
 
         <TextView
             android:id="@+id/comp_att_card_course_title"
@@ -70,6 +70,7 @@
             android:id="@id/comp_att_card_absences_badge"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:gravity="center"
             android:text="@string/to_be_changed_programmatically"
             style="@style/AttendanceCardAbsencesBadge" />
 
