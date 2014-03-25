@@ -4,7 +4,7 @@ import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceGroup;
-import br.com.bernardorufino.android.universitario.helpers.Helper;
+import br.com.bernardorufino.android.universitario.helpers.CustomHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +27,7 @@ public class Summarizer {
         CharSequence value = null;
         if (pref instanceof Summarizable) {
             value = ((Summarizable) pref).getSummaryValue();
-            Helper.log("Its summarizable and value = " + value);
+            CustomHelper.log("Its summarizable and value = " + value);
         } else if (pref instanceof ListPreference) {
             value = ((ListPreference) pref).getEntry();
         } else if (pref instanceof EditTextPreference) {

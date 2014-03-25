@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import br.com.bernardorufino.android.universitario.ext.summarizer.Summarizable;
-import br.com.bernardorufino.android.universitario.helpers.ViewHelper;
+import br.com.bernardorufino.android.universitario.helpers.CustomViewHelper;
 
 import static com.google.common.base.Preconditions.*;
 
@@ -84,7 +84,7 @@ public class EditDecimalPreference extends DialogPreference implements Summariza
         );
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         mEditText.setLayoutParams(params);
-        ViewHelper.tryMakeOrphan(mEditText);
+        CustomViewHelper.tryMakeOrphan(mEditText);
         layout.addView(mEditText);
         return layout;
     }

@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
 
 import static br.com.bernardorufino.android.universitario.application.Definitions.LOG_TAG;
 
-public class Helper {
+public class CustomHelper {
 
 //    public static boolean hasPlayServices(Context context) {
 //        return GooglePlayServicesUtil.isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS;
@@ -34,7 +34,7 @@ public class Helper {
     }
 
     // Prevents instantiation
-    private Helper() {
+    private CustomHelper() {
         throw new AssertionError("Cannot instantiate object from " + this.getClass());
     }
 }

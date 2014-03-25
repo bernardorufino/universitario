@@ -14,8 +14,8 @@ import android.widget.TextView;
 import br.com.bernardorufino.android.universitario.R;
 import br.com.bernardorufino.android.universitario.application.Definitions;
 import br.com.bernardorufino.android.universitario.application.Facets;
-import br.com.bernardorufino.android.universitario.helpers.Helper;
-import br.com.bernardorufino.android.universitario.helpers.ViewHelper;
+import br.com.bernardorufino.android.universitario.helpers.CustomHelper;
+import br.com.bernardorufino.android.universitario.helpers.CustomViewHelper;
 import br.com.bernardorufino.android.universitario.model.ModelManagers;
 import br.com.bernardorufino.android.universitario.model.attendance.Attendance;
 import br.com.bernardorufino.android.universitario.model.attendance.AttendanceManager;
@@ -100,8 +100,8 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
     private TextView mContextHeader;
 
     private TextView getContextHeader(String title) {
-        if (mContextHeader == null || !ViewHelper.tryMakeOrphan(mContextHeader)) {
-            Helper.log("Inflating view for context menu of attendances");
+        if (mContextHeader == null || !CustomViewHelper.tryMakeOrphan(mContextHeader)) {
+            CustomHelper.log("Inflating view for context menu of attendances");
             mContextHeader = (TextView) LayoutInflater.from(getActivity())
                     .inflate(R.layout.component_context_menu_header_attendance, null);
         }
@@ -194,10 +194,10 @@ public class AttendanceFragment extends RoboFragment implements LoaderManager.Lo
             if (e == null) {
                 /* TODO: Animate view */
                 String course = mAttendance.getCourse().getTitle();
-                ViewHelper.flash(getActivity(), course + " removido");
+                CustomViewHelper.flash(getActivity(), course + " removido");
             } else {
-                Helper.log("Error deleting attendance: " + e.getMessage());
-                ViewHelper.flash(getActivity(), "Ocorreu um erro =(");
+                CustomHelper.log("Error deleting attendance: " + e.getMessage());
+                CustomViewHelper.flash(getActivity(), "Ocorreu um erro =(");
             }
         }
     }

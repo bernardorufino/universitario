@@ -7,7 +7,7 @@ import android.preference.PreferenceActivity;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import br.com.bernardorufino.android.universitario.R;
-import br.com.bernardorufino.android.universitario.helpers.ViewHelper;
+import br.com.bernardorufino.android.universitario.helpers.CustomViewHelper;
 import br.com.bernardorufino.android.universitario.view.fragments.SettingsFragment;
 
 import java.util.List;
@@ -41,7 +41,7 @@ public class SettingsActivity extends PreferenceActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // hasHeaders() not working
-                boolean hasHeaders = ViewHelper.isVisible(getListView());
+                boolean hasHeaders = CustomViewHelper.isVisible(getListView());
                 if (hasHeaders) {
                     NavUtils.navigateUpFromSameTask(this);
                 } else {

@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import br.com.bernardorufino.android.universitario.R;
-import br.com.bernardorufino.android.universitario.helpers.ViewHelper;
+import br.com.bernardorufino.android.universitario.helpers.CustomViewHelper;
 import br.com.bernardorufino.android.universitario.view.components.MenuItemView;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
@@ -42,10 +42,10 @@ public class NavMenuFragment extends RoboFragment {
     private void onItemClick(int itemId) {
         switch (itemId) {
             case R.id.menu_item_username:
-                ViewHelper.flash(this, "Username");
+                CustomViewHelper.flash(this, "Username");
                 break;
             case R.id.menu_item_info:
-                ViewHelper.flash(this, "Info");
+                CustomViewHelper.flash(this, "Info");
                 break;
         }
     }

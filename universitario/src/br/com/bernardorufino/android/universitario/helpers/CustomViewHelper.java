@@ -11,7 +11,7 @@ import android.widget.Toast;
 import static br.com.bernardorufino.android.universitario.application.Definitions.NAMESPACE;
 import static com.google.common.base.Preconditions.*;
 
-public class ViewHelper {
+public class CustomViewHelper {
 
     public static void flash(Fragment fragment, String message) {
         flash(fragment.getActivity(), message);
@@ -58,7 +58,7 @@ public class ViewHelper {
     }
 
     // Prevents instantiation
-    private ViewHelper() {
+    private CustomViewHelper() {
         throw new AssertionError("Cannot instantiate object from " + this.getClass());
     }
 }

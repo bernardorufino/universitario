@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.LinearLayout;
 import br.com.bernardorufino.android.universitario.R;
-import br.com.bernardorufino.android.universitario.helpers.Helper;
+import br.com.bernardorufino.android.universitario.helpers.CustomHelper;
 
 import static com.google.common.base.Preconditions.*;
 
@@ -72,7 +72,7 @@ public class DiscreteProgressBarView extends LinearLayout {
     }
 
     private void createUnits() {
-        Helper.log("Creating views");
+        CustomHelper.log("Creating views");
         removeAllViews();
         for (int i = 0; i < mTotal; i++) {
             ProgressUnitView unit = new ProgressUnitView(getContext(), mOffColor);

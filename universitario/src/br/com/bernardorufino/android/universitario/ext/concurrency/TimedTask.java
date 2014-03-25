@@ -3,7 +3,7 @@ package br.com.bernardorufino.android.universitario.ext.concurrency;
 
 import android.os.AsyncTask;
 import android.os.Handler;
-import br.com.bernardorufino.android.universitario.helpers.Helper;
+import br.com.bernardorufino.android.universitario.helpers.CustomHelper;
 
 import java.util.concurrent.Executor;
 
@@ -32,7 +32,7 @@ public abstract class TimedTask {
     * Will run on mMainHandler thread.
     * */
     public void onCancel() {
-        Helper.log("Worker thread canceled");
+        CustomHelper.log("Worker thread canceled");
     }
 
 

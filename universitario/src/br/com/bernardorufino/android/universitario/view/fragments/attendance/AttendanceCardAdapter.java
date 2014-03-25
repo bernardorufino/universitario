@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import br.com.bernardorufino.android.universitario.helpers.Helper;
+import br.com.bernardorufino.android.universitario.helpers.CustomHelper;
 import br.com.bernardorufino.android.universitario.model.ModelManagers;
 import br.com.bernardorufino.android.universitario.model.attendance.Attendance;
 import br.com.bernardorufino.android.universitario.model.attendance.AttendanceManager;
@@ -30,7 +30,7 @@ public class AttendanceCardAdapter extends BaseAdapter {
         // Don't update view if nothing to update, this happens when the UI elements
         // that triggered the update have itself updated the appropriated models
         if (mAttendances.equals(attendances)) {
-            Helper.log("Not redrawing, it's equal");
+            CustomHelper.log("Not redrawing, it's equal");
             return;
         }
         mAttendances = attendances;
@@ -72,7 +72,7 @@ public class AttendanceCardAdapter extends BaseAdapter {
                               ? (AttendanceCard) convertView
                               : new AttendanceCard(mContext);
         Attendance item = checkNotNull(getItem(position));
-        Helper.log("Adapter.getView() called for " + item.getCourse().getTitle());
+        CustomHelper.log("Adapter.getView() called for " + item.getCourse().getTitle());
         card.setOnAttendanceUpdateListener(mOnAttendanceUpdateListener);
         if (card.getAttendance() != item) card.setAttendance(item);
         return card;

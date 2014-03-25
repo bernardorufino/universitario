@@ -17,8 +17,8 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import br.com.bernardorufino.android.universitario.R;
 import br.com.bernardorufino.android.universitario.helpers.AnimationHelper;
-import br.com.bernardorufino.android.universitario.helpers.Helper;
-import br.com.bernardorufino.android.universitario.helpers.ViewHelper;
+import br.com.bernardorufino.android.universitario.helpers.CustomHelper;
+import br.com.bernardorufino.android.universitario.helpers.CustomViewHelper;
 import br.com.bernardorufino.android.universitario.model.ModelManagers;
 import br.com.bernardorufino.android.universitario.model.course.Course;
 import br.com.bernardorufino.android.universitario.model.course.CourseManager;
@@ -122,8 +122,8 @@ public class CourseEditFragment extends RoboDialogFragment {
                 mCourse.setProfessor(mCourseProfessor.getText().toString());
                 mCourse.setAllowedAbsences(mCourseAllowedAbsences.getValue());
             } catch (IllegalArgumentException e) {
-                Helper.log("Error saving course: " + e.getMessage());
-                ViewHelper.flash(getActivity(), "Dados invalidos");
+                CustomHelper.log("Error saving course: " + e.getMessage());
+                CustomViewHelper.flash(getActivity(), "Dados invalidos");
                 return;
             }
             new SaveCourseTask().execute();
@@ -169,8 +169,8 @@ public class CourseEditFragment extends RoboDialogFragment {
                 // Closes dialog
                 dismiss();
             } else {
-                Helper.log("Error saving course: " + e.getMessage());
-                ViewHelper.flash(getActivity(), "Ocorreu um erro =(");
+                CustomHelper.log("Error saving course: " + e.getMessage());
+                CustomViewHelper.flash(getActivity(), "Ocorreu um erro =(");
             }
         }
     }
