@@ -1,20 +1,21 @@
 package br.com.bernardorufino.android.universitario.ext.concurrency;
 
 import android.os.Handler;
+import android.os.Message;
+
+import java.lang.ref.WeakReference;
 
 /* TODO: Analyse if we externalize the thread as a parameter (the handler) */
 /* TODO: Can it be not synchronized? */
 public abstract class TrialScheduler {
 
-    private static enum State { IDLE, SCHEDULED, RETRY }
-
-    private State mState = State.IDLE;
-    private Handler mHandler = new Handler();
-    private TicToc mClock;
+    private final TicToc mClock;
+    private final Handler mHandler;
     private long mInterval;
 
     protected TrialScheduler(long interval) {
         mInterval = interval;
+        mHandler = new TrialHandler(this);
         mClock = new TicToc(interval);
     }
 
@@ -23,26 +24,36 @@ public abstract class TrialScheduler {
     public void tryExecute() {
         if (mClock.tictoc() >= mInterval) {
             doExecute();
-        } else if (mState == State.IDLE) {
-            scheduleTrial();
-            mState = State.SCHEDULED;
-        } else if (mState == State.SCHEDULED) {
-            mState = State.RETRY;
-        } /* else do nothing because it's already set for retrial */
+        } else {
+            mHandler.removeMessages(Messages.EXECUTE);
+            mHandler.sendEmptyMessageDelayed(Messages.EXECUTE, mInterval);
+        }
     }
 
-    private void scheduleTrial() {
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (mState == State.RETRY) {
-                    scheduleTrial();
-                    mState = State.SCHEDULED;
-                    return;
-                }
-                doExecute();
-                mState = State.IDLE;
+    private static class TrialHandler extends Handler {
+
+        private WeakReference<TrialScheduler> mTrialScheduler;
+
+        private TrialHandler(TrialScheduler trialScheduler) {
+            mTrialScheduler = new WeakReference<>(trialScheduler);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            TrialScheduler scheduler = mTrialScheduler.get();
+            if (scheduler == null) throw new AssertionError("TrialScheduler is null on handleMessage()");
+            switch (msg.what) {
+                case Messages.EXECUTE:
+                    scheduler.doExecute();
+                    break;
+                default:
+                    throw new AssertionError("Unexpected message code " + msg.what);
             }
-        }, mInterval);
+        }
+    }
+
+    private static class Messages {
+
+        public static final int EXECUTE = 1;
     }
 }
