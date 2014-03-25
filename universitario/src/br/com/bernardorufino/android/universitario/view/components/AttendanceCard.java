@@ -17,12 +17,7 @@ import static com.google.common.base.Preconditions.*;
 /* TODO: Make control buttons state list for pressed states */
 public class AttendanceCard extends FrameLayout {
 
-    public static interface OnAttendanceUpdateListener {
-
-        public void onUpdate(Attendance attendance);
-    }
-
-    private static final long INTERVAL_UPDATE_TRIGGER = 500; // Milliseconds
+    private static final long INTERVAL_UPDATE_TRIGGER = 300; // In ms
     private static final double PLUS_ONE_ABSENCE = 1;
     private static final double PLUS_FRACTION_ABSENCE = 0.5;
     private static final double MINUS_FRACTION_ABSENCE = -0.5;
@@ -66,14 +61,14 @@ public class AttendanceCard extends FrameLayout {
         mOnAttendanceUpdateListener = onAttendanceUpdateListener;
     }
 
-    private TrialScheduler mUpdater = new TrialScheduler(INTERVAL_UPDATE_TRIGGER) {
+    private final TrialScheduler mUpdater = new TrialScheduler(INTERVAL_UPDATE_TRIGGER) {
         @Override
         protected void doExecute() {
             mOnAttendanceUpdateListener.onUpdate(mAttendance);
         }
     };
 
-    private OnClickListener mOnAbsencesChangeListener = new OnClickListener() {
+    private final OnClickListener mOnAbsencesChangeListener = new OnClickListener() {
         @Override
         public void onClick(View view) {
             double delta = (view == mPlusOne) ? PLUS_ONE_ABSENCE
@@ -82,7 +77,10 @@ public class AttendanceCard extends FrameLayout {
                          : (view == mMinusOne) ? MINUS_ONE_ABSENCE
                          : UNDEFINED_ABSENCES_DELTA;
             checkState(delta != UNDEFINED_ABSENCES_DELTA);
-            if (mAttendance.getAbsences() + delta < 0) return;
+            if (mAttendance.getAbsences() + delta < 0) {
+                if (mAttendance.getAbsences() == 0) return;
+                delta = -mAttendance.getAbsences();
+            }
             mAttendance.increaseAbsences(delta);
             updateView();
             mUpdater.tryExecute();
@@ -122,5 +120,9 @@ public class AttendanceCard extends FrameLayout {
         double current = attendance.getAbsences();
         int total = attendance.getCourse().getAllowedAbsences();
         return AbsencesBarHelper.getStatusText(current, total);
+    }
+
+    public static interface OnAttendanceUpdateListener {
+        public void onUpdate(Attendance attendance);
     }
 }
