@@ -1,0 +1,11 @@
+*.iml
+.idea
+.gradle
+gen
+local.properties
+buck-*
+out
+docs
+build
+.DS_Store
+_site

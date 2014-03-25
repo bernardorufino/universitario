@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="rebound">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/rebound.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/libs/rebound-source/rebound-core/src/main/java" />
+      <root url="file://$PROJECT_DIR$/libs/rebound-source/rebound-core/src/test/java" />
+      <root url="file://$PROJECT_DIR$/libs/rebound-source/rebound-android/src/main/java" />
+      <root url="file://$PROJECT_DIR$/libs/rebound-source/rebound-android-example/src/main/java" />
+      <root url="file://$PROJECT_DIR$/libs/rebound-source/rebound-android-origami-example/src/main/java" />
+    </SOURCES>
+  </library>
+</component>
